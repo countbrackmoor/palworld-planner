@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Palworld Base Planner</title>
+<link rel="icon" type="image/png" href="../favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../favicon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* gorgon.live module. v2 of the Base Blueprint. Same ledger look, but a setup panel (level, bases, cap, World Tree) drives the base cards, unlock ladder, carry list, checklist and totals.
+   Role colors: ore amber, ancient magenta, breeding green, oil blue. Cards take the color of the first role they hold. */
+:root{
+  --bg:#EDF0EE; --surface:#F8FAF9; --ink:#16211F; --muted:#55645F; --line:#C9D2CE;
+  --a:#A85F00; --b:#A1246B; --c:#23704A; --d:#2A6C9A; --on:#FFFFFF;
+  --a-t:#F6E9D6; --b-t:#F4DCE9; --c-t:#DDEFE5; --d-t:#DCEAF4;
+  --warn:#8A3B12;
+  --f-display:"Space Grotesk","Segoe UI",system-ui,sans-serif;
+  --f-body:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1514; --surface:#172120; --ink:#E4ECE9; --muted:#98A8A2; --line:#2C3B38;
+    --a:#E39A3B; --b:#E070A8; --c:#5CC08B; --d:#6BB1DE; --on:#0F1514;
+    --a-t:#2A2214; --b-t:#2E1A26; --c-t:#15271E; --d-t:#14232E;
+    --warn:#E8A27A; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1514; --surface:#172120; --ink:#E4ECE9; --muted:#98A8A2; --line:#2C3B38;
+  --a:#E39A3B; --b:#E070A8; --c:#5CC08B; --d:#6BB1DE; --on:#0F1514;
+  --a-t:#2A2214; --b-t:#2E1A26; --c-t:#15271E; --d-t:#14232E;
+  --warn:#E8A27A; color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+img{max-width:100%}
+body{
+  margin:0;
+  background:var(--bg); color:var(--ink); font:15px/1.5 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 48px;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:780px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:30px;font-weight:700;letter-spacing:-.01em}
+h2{font-size:21px;font-weight:700;margin-bottom:6px}
+h3{font-size:16px;font-weight:700}
+p{margin:0 0 10px}
+a{color:inherit}
+.eyebrow{font:500 11px/1 var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+
+header{padding:22px 0 14px;display:flex;flex-direction:column;gap:10px}
+.lead{max-width:62ch;margin:0;font-size:16px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--muted);margin:4px 0 0}
+.g{font-family:var(--f-mono);color:var(--ink)}
+
+/* setup */
+.panel{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:14px}
+.setup{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px 18px;align-items:start}
+.fld{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fld label,.fld .lab{font:500 10.5px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+input[type=number]{width:72px;font:500 14px var(--f-mono);padding:7px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.qs,.seg{display:flex;flex-wrap:wrap;gap:6px}
+.qs button,.seg button{padding:7px 11px;font-size:12.5px}
+.seg button{min-width:42px;font-family:var(--f-mono)}
+button[aria-pressed="true"]{background:var(--b);color:var(--on);border-color:var(--b)}
+.toggles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 18px;margin-top:14px}
+.opt{display:flex;gap:8px;align-items:center;font-size:14px;min-width:0}
+.opt input[type=checkbox]{flex:none;width:20px;height:20px;accent-color:var(--b)}
+.statusline{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:13.5px}
+
+.jump{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--gn,0px));z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:6px;overflow-x:auto;padding:8px 0;scrollbar-width:none;margin-top:14px}
+.jump::-webkit-scrollbar{display:none}
+.jump a{flex:none;text-decoration:none;font:500 12.5px/1 var(--f-body);padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.jump a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--b);outline-offset:2px}
+
+section{padding-top:28px;scroll-margin-top:calc(56px + var(--gn,0px))}
+section#setup{padding-top:0}
+.sec-sub{color:var(--muted);max-width:64ch;margin-bottom:14px}
+
+/* base cards */
+.bases{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px}
+.base{border:1px solid var(--line);background:var(--surface);border-radius:10px;overflow:hidden;min-width:0}
+.base.a{--bc:var(--a);--bt:var(--a-t)} .base.b{--bc:var(--b);--bt:var(--b-t)}
+.base.c{--bc:var(--c);--bt:var(--c-t)} .base.d{--bc:var(--d);--bt:var(--d-t)}
+.base-h{display:flex;gap:12px;align-items:center;padding:12px 14px;background:var(--bt)}
+.badge{flex:none;width:36px;height:36px;border-radius:8px;background:var(--bc);color:var(--on);display:grid;place-items:center;font:700 18px var(--f-display)}
+.base-h p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.base-b{padding:12px 14px 14px;display:flex;flex-direction:column;gap:12px}
+.gauge{display:flex;align-items:center;gap:10px;font-size:12.5px}
+.bar{flex:1;height:8px;border-radius:4px;background:var(--line);position:relative;overflow:hidden}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--bc)}
+.bar .hi{opacity:.35;width:var(--hi,0%)} .bar .lo{width:var(--lo,0%)}
+.g-txt{flex:none;font:500 12px var(--f-mono)}
+.gauge.over .g-txt{color:var(--warn)}
+.row h4{margin:0 0 3px;font:500 10.5px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.row ul{margin:0;padding-left:18px}
+.row li{margin:2px 0}
+.row li .w{font:500 12px var(--f-mono);color:var(--muted)}
+.row.later li{color:var(--muted)}
+.tag{font:500 11px var(--f-mono);color:var(--warn);white-space:nowrap}
+.site{font-size:12.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
+.skip{border:1px dashed var(--line);border-radius:10px;padding:12px 14px;color:var(--muted);font-size:13.5px;margin-top:14px}
+
+/* diagram */
+figure{margin:0}
+.fig{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 6px 6px}
+.fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto;color:var(--ink)}
+figcaption{font-size:13px;color:var(--muted);padding:8px 8px 4px;max-width:66ch}
+svg .bx{fill:var(--surface);stroke:currentColor;stroke-width:1.2}
+svg .dash{stroke-dasharray:4 3}
+svg .bxa{fill:var(--a-t);stroke:var(--a);stroke-width:1.6}
+svg .bxb{fill:var(--b-t);stroke:var(--b);stroke-width:1.6}
+svg .bxc{fill:var(--c-t);stroke:var(--c);stroke-width:1.6}
+svg .ln{fill:none;stroke:currentColor;stroke-width:1.4}
+svg .t{fill:currentColor;font:600 12px var(--f-body)}
+svg .s{fill:var(--muted);font:400 11px var(--f-body)}
+svg .q{fill:currentColor;font:500 11px var(--f-mono)}
+svg g.off{opacity:.3}
+
+/* tables */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:480px;font-size:13.5px}
+th{font:500 10.5px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
+td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr.next td{background:var(--b-t)}
+tr.locked td{color:var(--muted)}
+.pill{display:inline-block;font:500 11px/1 var(--f-mono);padding:4px 6px;border-radius:4px;color:var(--on);margin-right:3px}
+.pill.a{background:var(--a)} .pill.b{background:var(--b)} .pill.c{background:var(--c)} .pill.d{background:var(--d)}
+.pill.w{background:transparent;color:var(--ink);border:1px dashed var(--muted)}
+.st{font:500 11.5px var(--f-mono);white-space:nowrap}
+.st.ok{color:var(--c)} .st.no{color:var(--muted)}
+
+/* checklist */
+.phase{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.phase h3{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:6px}
+.count{font:500 12px var(--f-mono);color:var(--muted)}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:7px 0;cursor:pointer;min-width:0}
+.chk input{flex:none;width:20px;height:20px;margin:1px 0 0;accent-color:var(--b)}
+.chk span{min-width:0}
+.chk input:checked + span{color:var(--muted);text-decoration:line-through}
+.chk.off{cursor:default;color:var(--muted)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+button{font:500 13px var(--f-body);padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+button.armed{border-color:var(--warn);color:var(--warn)}
+
+/* calculator */
+.controls{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:12px}
+#calc td:first-child{font-weight:500}
+#calc td.note{color:var(--muted);font-size:12.5px}
+.foot{font-size:12.5px;color:var(--muted);margin-top:8px;max-width:70ch}
+
+/* doubts */
+.doubts{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.doubts li{display:flex;gap:10px;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:10px 12px;min-width:0}
+.doubts .g{flex:none;font-size:15px;line-height:1.4}
+.doubts div{min-width:0}
+.doubts b{font-weight:600}
+.sources{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px}
+@media (prefers-reduced-motion:no-preference){ .bar i{transition:width .25s ease} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">Palworld 1.0.x · adjustable planner · v2</div>
+  <h1>Palworld Base Planner</h1>
+  <p class="lead">Set your level, how many bases you can place and your worker cap. The base roles, unlock ladder, carry list, checklist and material totals all follow. I'm assuming items don't move between bases on their own.</p>
+  <p class="legend"><span><span class="g">●</span> two or more sources, or game data</span><span><span class="g">◐</span> one source, or sources disagree</span><span><span class="g">○</span> unverified, check in game</span></p>
+  <div class="eyebrow">Checked 9–10 Nov 2026 · data tables v1.0.5</div>
+</header>
+
+<section id="setup">
+  <div class="panel">
+    <div class="setup">
+      <div class="fld"><label for="lvl">Your level</label>
+        <input id="lvl" type="number" min="1" max="100" value="78" inputmode="numeric">
+        <div class="qs" id="qs" aria-label="Quick set level">
+          <button type="button" data-l="20">Lv 20</button><button type="button" data-l="45">Lv 45</button><button type="button" data-l="65">Lv 65</button><button type="button" data-l="78">Lv 78</button>
+        </div>
+      </div>
+      <div class="fld"><span class="lab" id="nb-l">Bases you can place</span>
+        <div class="seg" id="nb" role="group" aria-labelledby="nb-l">
+          <button type="button" data-n="1">1</button><button type="button" data-n="2">2</button><button type="button" data-n="3">3</button><button type="button" data-n="4">4</button>
+        </div>
+      </div>
+      <div class="fld"><label for="cap">Worker cap per base</label>
+        <input id="cap" type="number" min="15" max="50" value="20" inputmode="numeric">
+        <span class="muted small">World Settings. Default 15, max 50.</span>
+      </div>
+    </div>
+    <div class="toggles">
+      <label class="opt"><input type="checkbox" id="tree" checked> World Tree unlocked</label>
+      <label class="opt"><input type="checkbox" id="wipe" checked> Wiping existing bases</label>
+      <label class="opt"><input type="checkbox" id="o-furnace"> Need to build the Ancient Furnace</label>
+    </div>
+    <div class="statusline" id="status"></div>
+  </div>
+  <p class="foot">Level means the unlock level shown on each structure, not base level. Base level comes from base missions and decides how many bases you can place. Default limit is 4 bases per guild, up to 10 in World Settings.</p>
+</section>
+
+<nav class="jump" aria-label="Sections">
+  <a href="#bases">Bases</a><a href="#ladder">Unlocks</a><a href="#chain">Chain</a><a href="#carry">Carry</a><a href="#order">Order</a><a href="#totals">Totals</a><a href="#recipes">Recipes</a><a href="#doubts">Doubts</a>
+</nav>
+
+<section id="bases">
+  <h2>Your bases</h2>
+  <p class="sec-sub" id="bases-sub"></p>
+  <div class="bases" id="bases-out"></div>
+  <div id="skip-out"></div>
+</section>
+
+<section id="ladder">
+  <h2>Unlock ladder</h2>
+  <p class="sec-sub">What you have and what's next. Where two sources disagree on the level, the table shows the first and notes the other.</p>
+  <div class="tw"><table><thead><tr><th></th><th>Structure</th><th style="text-align:right">Level</th><th>Status</th><th>Note</th></tr></thead><tbody id="ladder-out"></tbody></table></div>
+</section>
+
+<section id="chain">
+  <h2>The Paloxite chain</h2>
+  <p class="sec-sub">Paloxite Ingots gate the Recycler, the Synthesizer and the Hatchery, so this is the bottleneck once you reach it.</p>
+  <div id="chain-lock" class="skip" hidden></div>
+  <figure class="fig" id="chain-fig">
+    <svg viewBox="0 0 360 444" role="img" aria-label="Paloxite Ore, Holy Water and Soralite go into the Ancient Furnace at the ancient base, which makes Paloxite Ingots. The ingots build the Recycler at the ancient base, the Synthesizer at the ore base and the Hatchery at the breeding base. The Recycler returns Mythical Wood, Cores, Radiant Gems and Paloxite, which loops back.">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+      <rect class="bx dash" x="20" y="8" width="100" height="62" rx="6"/>
+      <text class="t" x="70" y="27" text-anchor="middle">Paloxite Ore</text>
+      <text class="s" x="70" y="44" text-anchor="middle">World Tree,</text>
+      <text class="s" x="70" y="58" text-anchor="middle">hand-mined</text>
+      <rect class="bx dash" x="130" y="8" width="100" height="62" rx="6"/>
+      <text class="t" x="180" y="27" text-anchor="middle">Holy Water</text>
+      <text class="s" x="180" y="44" text-anchor="middle">World Tree,</text>
+      <text class="s" x="180" y="58" text-anchor="middle">fishing, drops</text>
+      <rect class="bx" x="240" y="8" width="100" height="62" rx="6"/>
+      <text class="t" x="290" y="27" text-anchor="middle">Soralite</text>
+      <text class="s" x="290" y="44" text-anchor="middle">Quarry,</text>
+      <text class="s" x="290" y="58" text-anchor="middle">ancient base</text>
+      <line class="ln" x1="70" y1="70" x2="70" y2="116" marker-end="url(#ah)"/>
+      <line class="ln" x1="180" y1="70" x2="180" y2="116" marker-end="url(#ah)"/>
+      <line class="ln" x1="290" y1="70" x2="290" y2="116" marker-end="url(#ah)"/>
+      <text class="q" x="78" y="98">×2</text><text class="q" x="188" y="98">×1</text><text class="q" x="298" y="98">×1</text>
+      <rect class="bxb" x="20" y="118" width="320" height="52" rx="8"/>
+      <text class="t" x="180" y="140" text-anchor="middle">Ancient Furnace · ancient base</text>
+      <text class="s" x="180" y="158" text-anchor="middle">needs a Kindling Lv 6+ and a Cooling Lv 6+ Pal</text>
+      <line class="ln" x1="180" y1="170" x2="180" y2="196" marker-end="url(#ah)"/>
+      <text class="q" x="190" y="187">1 craft = 1 ingot</text>
+      <rect class="bxb" x="100" y="198" width="160" height="34" rx="17"/>
+      <text class="t" x="180" y="220" text-anchor="middle">Paloxite Ingot</text>
+      <path class="ln" d="M180 232V250M70 250H290"/>
+      <line class="ln" x1="70" y1="250" x2="70" y2="268" marker-end="url(#ah)"/>
+      <line class="ln" x1="180" y1="250" x2="180" y2="268" marker-end="url(#ah)"/>
+      <line class="ln" x1="290" y1="250" x2="290" y2="268" marker-end="url(#ah)"/>
+      <g id="sink-rec">
+        <rect class="bxb" x="20" y="270" width="100" height="78" rx="6"/>
+        <text class="t" x="70" y="289" text-anchor="middle">Recycler</text>
+        <text class="q" x="70" y="306" text-anchor="middle">50 ingots</text>
+        <text class="s" x="70" y="321" text-anchor="middle">+ 20 Cores</text>
+        <text class="s" x="70" y="336" text-anchor="middle">ancient base</text>
+      </g>
+      <g id="sink-syn">
+        <rect class="bxa" x="130" y="270" width="100" height="78" rx="6"/>
+        <text class="t" x="180" y="289" text-anchor="middle">Synthesizer</text>
+        <text class="q" x="180" y="306" text-anchor="middle">50 ingots</text>
+        <text class="s" x="180" y="321" text-anchor="middle">+ 10 Cores</text>
+        <text class="s" x="180" y="336" text-anchor="middle">ore base</text>
+      </g>
+      <g id="sink-hat">
+        <rect class="bxc" x="240" y="270" width="100" height="78" rx="6"/>
+        <text class="t" x="290" y="289" text-anchor="middle">Hatchery</text>
+        <text class="q" x="290" y="306" text-anchor="middle">100† ingots</text>
+        <text class="s" x="290" y="321" text-anchor="middle">+ 20 Cores</text>
+        <text class="s" x="290" y="336" text-anchor="middle">breeding base</text>
+      </g>
+      <line class="ln" x1="70" y1="348" x2="70" y2="376" marker-end="url(#ah)"/>
+      <text class="q" x="78" y="366">relics + Holy Water in</text>
+      <rect class="bxb" x="20" y="378" width="320" height="56" rx="8"/>
+      <text class="t" x="180" y="398" text-anchor="middle">Recycler returns</text>
+      <text class="s" x="180" y="414" text-anchor="middle">Mythical Wood, Cores, Radiant Gems, Paloxite*</text>
+      <text class="s" x="180" y="428" text-anchor="middle">*ore or ingot is unconfirmed</text>
+      <path class="ln dash" d="M20 406H8V39H18" marker-end="url(#ah)"/>
+    </svg>
+    <figcaption>Dashed boxes are hand-carried from the World Tree, where you can't build. Faded machines aren't unlocked at your level. The dashed loop is the Recycler's Paloxite coming back. If it returns ingots, they skip the furnace. † The Hatchery's 100 ingots and 50 AI Cores come from one guide.</figcaption>
+  </figure>
+</section>
+
+<section id="carry">
+  <h2>Carry manifest</h2>
+  <p class="sec-sub">Only the moves your setup needs. If two roles share a base, that move disappears.</p>
+  <div class="tw"><table>
+    <thead><tr><th>From</th><th>To</th><th>What</th></tr></thead>
+    <tbody id="carry-out"></tbody>
+  </table></div>
+</section>
+
+<section id="order">
+  <h2>Build order</h2>
+  <p class="sec-sub">Locked steps are greyed until your level or World Tree access allows them. Ticks save in this browser only.</p>
+  <div class="toolbar"><span class="count" id="total-count"></span><button type="button" id="reset">Clear ticks</button></div>
+  <div id="order-out"></div>
+</section>
+
+<section id="totals">
+  <h2>Material totals</h2>
+  <p class="sec-sub">Tick what you plan to build. This is a planning total, so locked structures can be counted too. The furnace toggle is in the setup panel.</p>
+  <div class="controls">
+    <label class="opt"><input type="checkbox" id="o-recycler" checked> Recycler <span class="tag" id="h-rec"></span></label>
+    <label class="opt"><input type="checkbox" id="o-hatchery" checked> Hatchery <span class="tag" id="h-hat"></span></label>
+    <label class="opt" for="o-synth">Synthesizers <input type="number" id="o-synth" min="0" max="4" value="1" inputmode="numeric"> <span class="tag" id="h-syn"></span></label>
+  </div>
+  <div class="tw"><table id="calc"><thead><tr><th>Material</th><th style="text-align:right">Total</th><th>Where it comes from</th></tr></thead><tbody id="calc-body"></tbody></table></div>
+  <p class="foot">Each ingot is 1 Soralite, 2 Paloxite Ore and 1 Holy Water. Tech Point costs differ between sources, so I left them out. † The Hatchery's 100 ingots and 50 AI Cores are one guide's figures. Other sources list only 30 Parts and 20 Cores.</p>
+</section>
+
+<section id="recipes">
+  <h2>Recipes</h2>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>Recipe</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="g">●</td><td><b>Paloxite Ingot</b><br>1 Soralite + 2 Paloxite Ore + 1 Holy Water</td><td>Ancient Furnace only.</td></tr>
+      <tr><td class="g">◐</td><td><b>Soralite Ingot</b><br>2 Soralite + 2 Pure Quartz</td><td>One database lists it.</td></tr>
+      <tr><td class="g">●</td><td><b>Hexolite</b><br>1 Chromite + 1 Hexolite Quartz</td><td>Gigantic Furnace or Ancient Furnace. The old 5 / 12 / 20 recipe is pre-1.0.</td></tr>
+      <tr><td class="g">●</td><td><b>Coralum Ingot</b><br>2 Coralum Ore + 5 Coal</td><td>One database says Pal Gear Workbench, others say Gigantic or Ancient Furnace.</td></tr>
+      <tr><td class="g">◐</td><td><b>Chromite</b> is used in 3 recipes</td><td>Hexolite and Mythical Wooden Board. I couldn't find the third.</td></tr>
+      <tr><td class="g">◐</td><td><b>Coralum Ore</b> is used in 3 recipes</td><td>Coralum Ingot and two fishing rods.</td></tr>
+      <tr><td class="g">●</td><td><b>Plasteel</b><br>2 Crude Oil + 5 Ore</td><td>Electric Furnace.</td></tr>
+      <tr><td class="g">◐</td><td><b>Synthesizer menu (12)</b><br>Wood, Stone, Hardwood, Paldium Fragment, Ore, Coal, Chromite, Sulfur, Pure Quartz, Hexolite Quartz, Coralum Ore, Soralite</td><td>No Paloxite. One Pal, Mining or Lumbering Lv 6+, 800 W. Output stops at 9,999 (one source).</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="doubts">
+  <h2>What I couldn't confirm</h2>
+  <p class="sec-sub">Check these in game before you rely on them.</p>
+  <ul class="doubts">
+    <li><span class="g">○</span><div><b>No transfer between bases.</b> My assumption, about 90% sure. If items do move, the carry list shrinks.</div></li>
+    <li><span class="g">◐</span><div><b>Unlock levels.</b> Pure Quartz Quarry, Hexolite Quartz Mine and the High-Pressure Extractor differ by 1 between Palpedia and Pindrop. Sulfur Quarry differs by 1 in one source. The Coal Quarry is 37 in one and 53 in another, which is a real conflict.</div></li>
+    <li><span class="g">○</span><div><b>Structures with no level here.</b> Ore Mining Site, Crude Oil Extractor, Electric Furnace, Breeding Farm and the Ancient Workbench had no level I could verify. The planner treats them as available at any level, except the Workbench, which I gated with the Ancient Furnace as a guess.</div></li>
+    <li><span class="g">◐</span><div><b>Fourth base.</b> One tracker derives base level 21, three guides say 25. I have no verified level for bases 2 and 3.</div></li>
+    <li><span class="g">◐</span><div><b>Tech Point costs.</b> A Palpedia table disagrees with Pindrop's per-structure pages, and the Ancient points are separate. I left costs out.</div></li>
+    <li><span class="g">◐</span><div><b>Oil extractor.</b> Pindrop says the High-Pressure Extractor doesn't need an oil node. Earlier guides say the regular one does. v1 said both need one, which was wrong for the High-Pressure model.</div></li>
+    <li><span class="g">◐</span><div><b>Hatchery cost.</b> 30 Parts and 20 Cores agree across sources. The 100 Paloxite Ingots and 50 AI Cores come from one guide, about 75% sure.</div></li>
+    <li><span class="g">○</span><div><b>Recycler output.</b> Sources say it returns "Paloxite" without saying ore or ingots.</div></li>
+    <li><span class="g">◐</span><div><b>Worker cap.</b> Every preset gives 15. The level table reaches 30 at base level 30, and the setting maxes at 50.</div></li>
+    <li><span class="g">○</span><div><b>Worker counts</b> are my estimates, recounted per structure plus a hauling allowance. They differ slightly from v1's.</div></li>
+    <li><span class="g">○</span><div><b>Merged bases.</b> The 1, 2 and 3 base layouts are my suggestions. Nothing in the sources says what works best.</div></li>
+    <li><span class="g">◐</span><div><b>Wiping bases.</b> One page covering 1.0 (checked Aug 2026) says disassembly refunds 100% and Pal workstations auto-dismantle with the Palbox. It says base level is a separate track but never says whether it resets when the last Palbox goes. I couldn't confirm that.</div></li>
+  </ul>
+  <p class="foot">Sources:</p>
+  <div class="sources">
+    <a href="https://pindrop.gg/palworld/structures/ancient-furnace">Ancient Furnace</a>
+    <a href="https://pindrop.gg/palworld/structures/ancient-material-synthesizer">Synthesizer</a>
+    <a href="https://pindrop.gg/palworld/structures/ancient-relic-recycler">Recycler</a>
+    <a href="https://www.thepalprofessor.com/buildings/Ancient-Hatchery">Hatchery</a>
+    <a href="https://www.palmods.gg/blog/palworld-ancient-hatchery-50-ai-cores">Hatchery cost</a>
+    <a href="https://www.palworld.tools/items/hexolite">Hexolite</a>
+    <a href="https://nodecraft.com/support/games/palworld/general/how-to-get-paloxite-and-paloxite-ingots">Paloxite</a>
+    <a href="https://progametalk.com/palworld/how-to-get-ancient-material-synthesizer/">Synthesizer menu</a>
+    <a href="https://pindrop.gg/palworld/guides/base-limit">Base limits</a>
+    <a href="https://palpedia.com/tech">Palpedia tech list</a>
+    <a href="https://www.switchbladegaming.com/palworld/move-your-base/">Moving bases</a>
+  </div>
+</section>
+<footer class="foot" style="margin-top:32px">Unofficial fan tool. Not affiliated with or endorsed by Pocketpair. Mechanical summaries only, no game art or text.</footer>
+</div>
+
+<script>
+(function(){
+/*CALC-START*/
+var STRUCT={
+  furnace:{cores:10,thermal:20,computer:30,coralumIngot:100},
+  recycler:{ingots:50,wood:50,parts:30,cores:20},
+  synth:{ingots:50,cores:10},
+  hatchery:{ingots:100,parts:30,cores:20,ai:50}
+};
+function calcTotals(o){
+  var t={ingots:0,cores:0,parts:0,wood:0,ai:0,thermal:0,computer:0,coralumIngot:0};
+  function add(s,n){for(var k in s){t[k]=(t[k]||0)+s[k]*n;}}
+  if(o.furnace)add(STRUCT.furnace,1);
+  if(o.recycler)add(STRUCT.recycler,1);
+  if(o.synth>0)add(STRUCT.synth,o.synth);
+  if(o.hatchery)add(STRUCT.hatchery,1);
+  t.ore=t.ingots*2; t.soralite=t.ingots; t.water=t.ingots;
+  t.coralumOre=t.coralumIngot*2; t.coal=t.coralumIngot*5;
+  return t;
+}
+/*CALC-END*/
+
+/*PLAN-START*/
+var UNLOCK=[
+  {k:"coal",n:"Coal Quarry",l:37,g:"○",x:"Palpedia says 37, an earlier source said 53."},
+  {k:"sulfur",n:"Sulfur Quarry",l:47,g:"◐",x:"One source says 46."},
+  {k:"hpext",n:"High-Pressure Crude Oil Extractor",l:52,g:"◐",x:"Pindrop says 51. Doesn't need an oil node."},
+  {k:"quartz",n:"Pure Quartz Quarry",l:53,g:"◐",x:"Pindrop says 52."},
+  {k:"gfurn",n:"Gigantic Furnace",l:58,g:"●",x:"Hexolite and Coralum Ingot."},
+  {k:"hexmine",n:"Hexolite Quartz Mine",l:63,g:"◐",x:"Pindrop says 62."},
+  {k:"afurn",n:"Ancient Furnace",l:66,g:"●",x:"Inputs come from the World Tree."},
+  {k:"soralite",n:"Soralite Quarry",l:72,g:"●",x:""},
+  {k:"recycler",n:"Ancient Relic Recycler",l:74,g:"●",x:""},
+  {k:"hatch",n:"Ancient Hatchery",l:76,g:"●",x:""},
+  {k:"synth",n:"Ancient Material Synthesizer",l:78,g:"●",x:""}
+];
+var UNCHECKED=["Ore Mining Site","Crude Oil Extractor","Electric Furnace","Breeding Farm and Egg Incubators","Ancient Workbench"];
+var UL={}; (function(){for(var i=0;i<UNLOCK.length;i++){UL[UNLOCK[i].k]=UNLOCK[i];}})();
+
+var ROLES={
+  A:{cls:"a",n:"Ore base",d:"Everything mined, plus Hexolite and Coralum."},
+  B:{cls:"b",n:"Ancient base",d:"Paloxite Ingots, Recycler, Workbench."},
+  C:{cls:"c",n:"Breeding base",d:"Cake chain, eggs, hatching."},
+  D:{cls:"d",n:"Oil base",d:"Last to build. Nothing waits on it."}
+};
+var JOBS=[
+  {id:"a_ore",r:"A",n:"Ore Mining Site",key:null,tree:false,lo:2,hi:2,x:"Astegon, Anubis and Aegidron are strong miners. Astegon is a dark type, so it works nights."},
+  {id:"a_coal",r:"A",n:"Coal Quarry",key:"coal",tree:false,lo:1,hi:1,x:""},
+  {id:"a_sulf",r:"A",n:"Sulfur Quarry",key:"sulfur",tree:false,lo:1,hi:1,x:""},
+  {id:"a_quartz",r:"A",n:"Pure Quartz Quarry",key:"quartz",tree:false,lo:1,hi:1,x:""},
+  {id:"a_hex",r:"A",n:"Hexolite Quartz Mine",key:"hexmine",tree:false,lo:1,hi:1,x:""},
+  {id:"a_furn",r:"A",n:"Furnaces",key:null,tree:false,lo:2,hi:3,x:"Kindling Pals. Hexolite and Coralum Ingot need the Gigantic Furnace (Lv 58)."},
+  {id:"a_syn",r:"A",n:"Ancient Material Synthesizer",key:"synth",tree:false,lo:1,hi:1,x:"Needs Mining or Lumbering Lv 6+. Swap its recipe between Chromite and Coralum Ore as you run short."},
+  {id:"b_sor",r:"B",n:"Soralite Quarry",key:"soralite",tree:false,lo:1,hi:1,x:"Mining Lv 6+ Pal. Blazamut is one guide's pick."},
+  {id:"b_furn",r:"B",n:"Ancient Furnace",key:"afurn",tree:true,lo:2,hi:2,x:"Kindling Lv 6+ and Cooling Lv 6+ Pals."},
+  {id:"b_rec",r:"B",n:"Ancient Relic Recycler",key:"recycler",tree:true,lo:1,hi:1,x:"Handiwork Pal."},
+  {id:"b_wb",r:"B",n:"Ancient Workbench",key:"afurn",tree:true,lo:1,hi:2,x:"Handiwork plus Medicine Production. Unlock level not verified, gated with the furnace as a guess."},
+  {id:"c_ranch",r:"C",n:"Ranch",key:null,tree:false,lo:4,hi:5,x:"Chikipi (eggs), Mozzarina (milk), Beegarde (honey), Lamball (wool). Over-assign Beegarde, since honey is usually the limit."},
+  {id:"c_food",r:"C",n:"Wheat, Mill, plots, Cooking Pot",key:null,tree:false,lo:4,hi:5,x:""},
+  {id:"c_breed",r:"C",n:"Breeding Farm and Egg Incubators",key:null,tree:false,lo:3,hi:4,x:""},
+  {id:"c_hatch",r:"C",n:"Ancient Hatchery",key:"hatch",tree:false,lo:1,hi:2,x:"Hatches on its own, so the Grintale egg-duplication trick no longer applies."},
+  {id:"d_ext",r:"D",n:"Crude Oil Extractor",key:null,tree:false,lo:1,hi:2,x:"The regular one needs an oil node. From Lv 52 the High-Pressure model is an option and doesn't."},
+  {id:"d_elec",r:"D",n:"Electric Furnace (Plasteel)",key:null,tree:false,lo:1,hi:2,x:"2 Crude Oil plus 5 Ore per Plasteel."},
+  {id:"d_log",r:"D",n:"Logging Site II or a second Synthesizer",key:null,tree:false,lo:1,hi:2,x:""}
+];
+var LAYOUT={
+  1:[["A","B","C","D"]],
+  2:[["A","B"],["C"]],
+  3:[["A"],["B","D"],["C"]],
+  4:[["A"],["B"],["C"],["D"]]
+};
+function isOpen(key,st){return key===null||st.lvl>=UL[key].l;}
+function reasons(key,tree,st){
+  var r=[];
+  if(key!==null&&st.lvl<UL[key].l)r.push("Lv "+UL[key].l);
+  if(tree&&!st.tree)r.push("World Tree");
+  return r;
+}
+function planBases(st){
+  var groups=LAYOUT[st.bases]||LAYOUT[4], out=[], used={}, i, j;
+  for(i=0;i<groups.length;i++){
+    var b={roles:groups[i],active:[],locked:[],lo:0,hi:0,haul:{lo:0,hi:0}};
+    for(j=0;j<JOBS.length;j++){
+      var jb=JOBS[j];
+      if(groups[i].indexOf(jb.r)<0)continue;
+      var rs=reasons(jb.key,jb.tree,st);
+      if(rs.length){b.locked.push({job:jb,why:rs.join(" + ")});}
+      else{b.active.push(jb);b.lo+=jb.lo;b.hi+=jb.hi;}
+    }
+    var n=b.active.length;
+    if(n>0){b.haul.lo=Math.max(1,Math.round(n*0.4));b.haul.hi=Math.max(1,Math.round(n*0.6));}
+    b.lo+=b.haul.lo;b.hi+=b.haul.hi;
+    for(j=0;j<groups[i].length;j++){used[groups[i][j]]=i;}
+    out.push(b);
+  }
+  var skipped=[];
+  for(var r in ROLES){if(used[r]===undefined)skipped.push(r);}
+  return {bases:out,skipped:skipped,roleBase:used};
+}
+var CARRY=[
+  {from:"T",to:"B",what:"Paloxite Ore, Holy Water, 50 Mythical Wood, relics",need:["b_furn"]},
+  {from:"A",to:"B",what:"Pure Quartz. Coralum Ingots if you build the furnace.",need:["b_furn","a_quartz"]},
+  {from:"B",to:"A",what:"50 Paloxite Ingots for the Synthesizer",need:["a_syn","b_furn"]},
+  {from:"B",to:"C",what:"100† Paloxite Ingots for the Hatchery, plus Cores, Parts, AI Cores",need:["c_hatch","b_furn"]},
+  {from:"A",to:"D",what:"Ore for Plasteel",need:["d_elec"]}
+];
+function carryRows(st,plan){
+  var act={}, i, j, rows=[];
+  for(i=0;i<plan.bases.length;i++){for(j=0;j<plan.bases[i].active.length;j++){act[plan.bases[i].active[j].id]=1;}}
+  for(i=0;i<CARRY.length;i++){
+    var c=CARRY[i], ok=true;
+    for(j=0;j<c.need.length;j++){if(!act[c.need[j]])ok=false;}
+    if(!ok)continue;
+    var fb=c.from==="T"?-1:plan.roleBase[c.from], tb=plan.roleBase[c.to];
+    rows.push({from:fb,to:tb,same:fb===tb,what:c.what});
+  }
+  return rows;
+}
+function nextUnlock(st){
+  var best=null;
+  for(var i=0;i<UNLOCK.length;i++){if(UNLOCK[i].l>st.lvl&&(!best||UNLOCK[i].l<best.l))best=UNLOCK[i];}
+  return best;
+}
+/*PLAN-END*/
+
+function $(id){return document.getElementById(id);}
+function fmt(n){return n.toLocaleString("en-US");}
+
+/* settings */
+var SKEY="palworld-base-planner-v2-settings", CKEY="palworld-base-planner-v2-checks";
+var S={lvl:78,bases:4,cap:20,tree:true,wipe:true,furn:false,rec:true,hat:true,syn:1};
+(function(){try{var v=JSON.parse(localStorage.getItem(SKEY)||"{}");for(var k in v){if(k in S)S[k]=v[k];}}catch(e){}})();
+function saveS(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
+var checks={};
+(function(){try{checks=JSON.parse(localStorage.getItem(CKEY)||"{}")||{};}catch(e){checks={};}})();
+function saveC(){try{localStorage.setItem(CKEY,JSON.stringify(checks));}catch(e){}}
+
+function clampInt(v,lo,hi,d){v=parseInt(v,10);if(!(v>=lo))return d;return v>hi?hi:v;}
+function readInputs(){
+  S.lvl=clampInt($("lvl").value,1,100,S.lvl);
+  S.cap=clampInt($("cap").value,15,50,S.cap);
+  S.tree=$("tree").checked; S.wipe=$("wipe").checked; S.furn=$("o-furnace").checked;
+  S.rec=$("o-recycler").checked; S.hat=$("o-hatchery").checked;
+  S.syn=clampInt($("o-synth").value,0,4,0);
+}
+function writeInputs(){
+  $("lvl").value=S.lvl; $("cap").value=S.cap;
+  $("tree").checked=S.tree; $("wipe").checked=S.wipe; $("o-furnace").checked=S.furn;
+  $("o-recycler").checked=S.rec; $("o-hatchery").checked=S.hat; $("o-synth").value=S.syn;
+}
+function stateObj(){return {lvl:S.lvl,bases:S.bases,tree:S.tree};}
+
+/* bases */
+function siteNote(roles){
+  var h="";
+  if(roles.indexOf("A")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Ore site, if you want one: summit near 190, -40. About 8 ore nodes, raids can't path up. Lay stone foundations so Pals don't slide off.</div>";
+  if(roles.indexOf("B")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Ancient site: anywhere buildable. Near the Foot of the World Tree (about 841, 639) shortens trips, and building inside the tree is blocked.</div>";
+  if(roles.indexOf("C")>=0)h+="<div class=\"site\">This base holds your best Pals. Raids come in waves, so put the Palbox in the middle, not on an outer wall.</div>";
+  if(roles.indexOf("D")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Oil site: a regular extractor needs an oil node, one guide lists one near -646, 270.</div>";
+  return h;
+}
+function renderBases(plan){
+  var html="", i, j;
+  for(i=0;i<plan.bases.length;i++){
+    var b=plan.bases[i], r0=ROLES[b.roles[0]];
+    var names=[], descs=[];
+    for(j=0;j<b.roles.length;j++){names.push(ROLES[b.roles[j]].n);descs.push(ROLES[b.roles[j]].d);}
+    html+="<article class=\"base "+r0.cls+"\"><div class=\"base-h\"><div class=\"badge\">"+(i+1)+"</div><div><h3>"+names.join(" + ")+"</h3><p>"+descs.join(" ")+"</p></div></div><div class=\"base-b\">";
+    html+="<div class=\"gauge\" data-lo=\""+b.lo+"\" data-hi=\""+b.hi+"\"><div class=\"bar\" role=\"img\" aria-label=\"Worker estimate\"><i class=\"hi\"></i><i class=\"lo\"></i></div><span class=\"g-txt\"></span></div>";
+    html+="<div class=\"row\"><h4>Build</h4>";
+    if(b.active.length){
+      html+="<ul>";
+      for(j=0;j<b.active.length;j++){html+="<li>"+b.active[j].n+" <span class=\"w\">"+(b.active[j].lo===b.active[j].hi?b.active[j].lo:b.active[j].lo+"–"+b.active[j].hi)+"</span></li>";}
+      html+="<li>Transporters <span class=\"w\">"+b.haul.lo+"–"+b.haul.hi+"</span></li></ul>";
+    } else html+="<p class=\"muted\">Nothing from this role is unlocked yet.</p>";
+    html+="</div>";
+    var notes="";
+    for(j=0;j<b.active.length;j++){if(b.active[j].x)notes+="<li>"+b.active[j].x+"</li>";}
+    if(notes)html+="<div class=\"row\"><h4>Staff notes</h4><ul>"+notes+"</ul></div>";
+    if(b.locked.length){
+      html+="<div class=\"row later\"><h4>Later</h4><ul>";
+      for(j=0;j<b.locked.length;j++){html+="<li>"+b.locked[j].job.n+" <span class=\"tag\">"+b.locked[j].why+"</span></li>";}
+      html+="</ul></div>";
+    }
+    html+=siteNote(b.roles)+"</div></article>";
+  }
+  $("bases-out").innerHTML=html;
+  var skip="";
+  if(plan.skipped.length){
+    var sn=[];for(i=0;i<plan.skipped.length;i++){sn.push(ROLES[plan.skipped[i]].n.toLowerCase());}
+    skip="<div class=\"skip\">Not placed with "+S.bases+" base"+(S.bases>1?"s":"")+": the "+sn.join(" and the ")+". Add it when a third base opens, folded into the ancient base.</div>";
+  }
+  $("skip-out").innerHTML=skip;
+  gauges();
+}
+function gauges(){
+  var cap=S.cap, list=document.querySelectorAll(".gauge");
+  for(var i=0;i<list.length;i++){
+    var g=list[i], lo=+g.getAttribute("data-lo"), hi=+g.getAttribute("data-hi");
+    var bar=g.querySelector(".bar");
+    bar.style.setProperty("--lo",Math.min(100,lo/cap*100)+"%");
+    bar.style.setProperty("--hi",Math.min(100,hi/cap*100)+"%");
+    g.querySelector(".g-txt").textContent=lo+"–"+hi+" of "+cap+(hi>cap?" · over":"");
+    bar.setAttribute("aria-label","Estimated workers "+lo+" to "+hi+" of "+cap);
+    g.classList.toggle("over",hi>cap);
+  }
+}
+
+/* ladder */
+function renderLadder(){
+  var nx=nextUnlock(S), html="", i;
+  for(i=0;i<UNLOCK.length;i++){
+    var u=UNLOCK[i], open=S.lvl>=u.l;
+    html+="<tr class=\""+(open?"":"locked ")+(nx&&nx.k===u.k?"next":"")+"\"><td class=\"g\">"+u.g+"</td><td>"+u.n+"</td><td class=\"num\">"+u.l+"</td><td><span class=\"st "+(open?"ok":"no")+"\">"+(open?"Unlocked":(u.l-S.lvl)+" to go")+"</span></td><td class=\"small muted\">"+u.x+"</td></tr>";
+  }
+  html+="<tr class=\"locked\"><td class=\"g\">○</td><td colspan=\"4\">Level not verified, treated as available: "+UNCHECKED.join(", ")+".</td></tr>";
+  $("ladder-out").innerHTML=html;
+  var nx2=nx?("Next unlock: "+nx.n+" at Lv "+nx.l+" ("+(nx.l-S.lvl)+" level"+(nx.l-S.lvl>1?"s":"")+" away)."):"Everything on the ladder is unlocked.";
+  var wt=S.tree?"":" World Tree is off, so the Paloxite chain stays locked.";
+  $("status").textContent="Level "+S.lvl+", "+S.bases+" base"+(S.bases>1?"s":"")+", cap "+S.cap+". "+nx2+wt;
+}
+
+/* chain */
+function renderChain(){
+  var ok=isOpen("afurn",S)&&S.tree;
+  $("chain-fig").hidden=!ok; $("chain-lock").hidden=ok;
+  if(!ok){
+    var w=reasons("afurn",true,S).join(" and ");
+    $("chain-lock").textContent="Locked: the Paloxite chain needs "+w+". Come back when you have it.";
+  }
+  $("sink-rec").setAttribute("class",isOpen("recycler",S)?"":"off");
+  $("sink-syn").setAttribute("class",isOpen("synth",S)?"":"off");
+  $("sink-hat").setAttribute("class",isOpen("hatch",S)?"":"off");
+}
+
+/* carry */
+function pillFor(plan,idx){
+  if(idx<0)return "<span class=\"pill w\">Tree</span>";
+  return "<span class=\"pill "+ROLES[plan.bases[idx].roles[0]].cls+"\">Base "+(idx+1)+"</span>";
+}
+function renderCarry(plan){
+  var rows=carryRows(S,plan), html="", i;
+  for(i=0;i<rows.length;i++){
+    var r=rows[i];
+    if(r.same){html+="<tr><td>"+pillFor(plan,r.from)+"</td><td><span class=\"muted\">same base</span></td><td class=\"muted\">"+r.what+" (no carry)</td></tr>";}
+    else html+="<tr><td>"+pillFor(plan,r.from)+"</td><td>"+pillFor(plan,r.to)+"</td><td>"+r.what+"</td></tr>";
+  }
+  if(!html)html="<tr><td colspan=\"3\" class=\"muted\">Nothing to carry yet. The ancient chain isn't open at your level.</td></tr>";
+  $("carry-out").innerHTML=html;
+}
+
+/* checklist */
+var PHASES=[
+  {t:"Before you wipe",only:"wipe",items:[
+    {k:"p0a",x:"Raise the work-Pals-per-base setting to match the gauges above."},
+    {k:"p0b",x:"Empty every chest first. Contents don't transfer. Then disassemble structures in Build Mode, which refunds 100% (one source, 1.0). Pal workstations auto-dismantle with the Palbox and drop their refund on the ground, so pick it up."},
+    {k:"p0c",x:"Keep one Palbox standing until the new bases are placed, since I found nothing on whether base level resets. Working Pals return to the Palbox and need their jobs set again."}]},
+  {t:"Ore base",role:"A",items:[
+    {k:"p1a",x:"Place the Palbox, then the Ore site and whichever quarries you have unlocked."},
+    {k:"p1b",x:"Add furnaces with Kindling Pals, plus transporters."},
+    {k:"p1c",x:"Stock 200 Coralum Ore and 500 Coal, and smelt 100 Coralum Ingot for the Ancient Furnace.",need:["gfurn"],only:"furn"}]},
+  {t:"Ancient base",role:"B",items:[
+    {k:"p2a",x:"Place the Palbox and the Soralite Quarry with a Mining Lv 6+ Pal.",need:["soralite"]},
+    {k:"p2b",x:"Build the Ancient Furnace if needed, then assign a Kindling Lv 6+ and a Cooling Lv 6+ Pal.",need:["afurn"],tree:true}]},
+  {t:"World Tree runs",items:[
+    {k:"p3a",x:"Drink Holy Water before approaching nodes. Without it, Paloxite and Mythical Wood nodes vanish.",need:["afurn"],tree:true},
+    {k:"p3b",x:"Mine Paloxite Ore with the Plasma Multicutter.",need:["afurn"],tree:true},
+    {k:"p3c",x:"Gather 50 Mythical Wood, spare Holy Water and relics.",need:["recycler"],tree:true}]},
+  {t:"Ingots, then machines",items:[
+    {k:"p4a",x:"Smelt 50 Paloxite Ingots and build the Recycler.",need:["recycler"],tree:true},
+    {k:"p4b",x:"Feed it relics and Holy Water. Collect the Paloxite it returns.",need:["recycler"],tree:true},
+    {k:"p4c",x:"Smelt 50 more ingots, carry them to the ore base, build the Synthesizer on Chromite.",need:["synth"],tree:true}]},
+  {t:"Breeding base",role:"C",items:[
+    {k:"p5a",x:"Ranch, wheat and Mill, vegetable plots, Cooking Pot."},
+    {k:"p5b",x:"Breeding Farm and a few Egg Incubators."},
+    {k:"p5c",x:"Hatchery once you hold 100† ingots, 50 AI Cores, 30 Parts and 20 Cores.",need:["hatch"]}]},
+  {t:"Oil base",role:"D",items:[
+    {k:"p6a",x:"Oil extractors, Electric Furnace, and a wood source."}]}
+];
+function itemLock(it){
+  var rs=[], i;
+  if(it.need){for(i=0;i<it.need.length;i++){if(!isOpen(it.need[i],S))rs.push("Lv "+UL[it.need[i]].l);}}
+  if(it.tree&&!S.tree)rs.push("World Tree");
+  return rs.join(" + ");
+}
+var boxes=[];
+function renderOrder(plan){
+  var html="", n=0, i, j;
+  for(i=0;i<PHASES.length;i++){
+    var p=PHASES[i];
+    if(p.only==="wipe"&&!S.wipe)continue;
+    if(p.role&&plan.roleBase[p.role]===undefined)continue;
+    n++;
+    html+="<div class=\"phase\"><h3>"+n+" · "+p.t+" <span class=\"count\" data-phase></span></h3>";
+    for(j=0;j<p.items.length;j++){
+      var it=p.items[j];
+      if(it.only==="furn"&&!S.furn)continue;
+      var lk=itemLock(it);
+      html+="<label class=\"chk"+(lk?" off":"")+"\"><input type=\"checkbox\" data-k=\""+it.k+"\""+(lk?" disabled":"")+(!lk&&checks[it.k]?" checked":"")+"><span>"+it.x+(lk?" <span class=\"tag\">"+lk+"</span>":"")+"</span></label>";
+    }
+    html+="</div>";
+  }
+  $("order-out").innerHTML=html;
+  boxes=document.querySelectorAll("#order-out input[data-k]");
+  for(i=0;i<boxes.length;i++){
+    boxes[i].addEventListener("change",function(){
+      var k=this.getAttribute("data-k");
+      if(this.checked)checks[k]=1; else delete checks[k];
+      saveC(); counts();
+    });
+  }
+  counts();
+}
+function counts(){
+  var done=0, total=0, phases=document.querySelectorAll("#order-out .phase");
+  for(var p=0;p<phases.length;p++){
+    var b=phases[p].querySelectorAll("input[data-k]:not(:disabled)"), d=0;
+    for(var j=0;j<b.length;j++){if(b[j].checked)d++;}
+    done+=d; total+=b.length;
+    phases[p].querySelector("[data-phase]").textContent=b.length?(d+" / "+b.length):"locked";
+  }
+  $("total-count").textContent=done+" of "+total+" open steps done";
+}
+var reset=$("reset"), armed=false, timer=null;
+reset.addEventListener("click",function(){
+  if(!armed){
+    armed=true; reset.textContent="Tap again to clear"; reset.classList.add("armed");
+    timer=setTimeout(function(){armed=false;reset.textContent="Clear ticks";reset.classList.remove("armed");},3000);
+    return;
+  }
+  clearTimeout(timer); armed=false; reset.textContent="Clear ticks"; reset.classList.remove("armed");
+  checks={}; saveC();
+  for(var k=0;k<boxes.length;k++){boxes[k].checked=false;}
+  counts();
+});
+
+/* totals */
+function renderCalc(){
+  var t=calcTotals({furnace:S.furn,recycler:S.rec,hatchery:S.hat,synth:S.syn});
+  var rows=[
+    ["Paloxite Ingots",t.ingots,"Ancient Furnace, ancient base"],
+    ["Paloxite Ore",t.ore,"World Tree, hand-mined with Holy Water active"],
+    ["Soralite",t.soralite,"Soralite Quarry, ancient base"],
+    ["World Tree Holy Water",t.water,"Plus extra for the mining buff"],
+    ["Ancient Civilization Cores",t.cores,"Raid bosses, oil rig chests, expeditions, Recycler rolls"],
+    ["Ancient Civilization Parts",t.parts,"Recycler 30, Hatchery 30"],
+    ["Mythical Wood",t.wood,"World Tree, 50 for the Recycler"],
+    ["AI Cores",t.ai,"Hatchery only, one source"],
+    ["Thermal Cores",t.thermal,"Furnace build"],
+    ["Computers",t.computer,"Furnace build"],
+    ["Coralum Ingots",t.coralumIngot,"Furnace build, made at the ore base"],
+    ["Coralum Ore",t.coralumOre,"2 per ingot"],
+    ["Coal",t.coal,"5 per Coralum Ingot"]
+  ];
+  var html="";
+  for(var i=0;i<rows.length;i++){
+    if(rows[i][1]>0)html+="<tr><td>"+rows[i][0]+"</td><td class=\"num\">"+fmt(rows[i][1])+"</td><td class=\"note\">"+rows[i][2]+"</td></tr>";
+  }
+  if(!html)html="<tr><td colspan=\"3\" class=\"muted\">Nothing selected.</td></tr>";
+  $("calc-body").innerHTML=html;
+  $("h-rec").textContent=isOpen("recycler",S)?"":"locked, Lv "+UL.recycler.l;
+  $("h-hat").textContent=isOpen("hatch",S)?"":"locked, Lv "+UL.hatch.l;
+  $("h-syn").textContent=isOpen("synth",S)?"":"locked, Lv "+UL.synth.l;
+}
+
+function renderAll(){
+  var plan=planBases(stateObj());
+  $("bases-sub").textContent=S.bases===4?"One job each. Worker counts are my estimates. Change the cap above to see how much room each base has.":"Roles are merged to fit "+S.bases+" base"+(S.bases>1?"s":"")+". Watch the gauges: a merged base can run over your cap.";
+  renderBases(plan); renderLadder(); renderChain(); renderCarry(plan); renderOrder(plan); renderCalc();
+  var nb=document.querySelectorAll("#nb button");
+  for(var i=0;i<nb.length;i++){nb[i].setAttribute("aria-pressed",String(+nb[i].getAttribute("data-n")===S.bases));}
+  var qs=document.querySelectorAll("#qs button");
+  for(var q=0;q<qs.length;q++){qs[q].setAttribute("aria-pressed",String(+qs[q].getAttribute("data-l")===S.lvl));}
+}
+function onChange(){readInputs();saveS();renderAll();}
+["lvl","cap","tree","wipe","o-furnace","o-recycler","o-hatchery","o-synth"].forEach(function(id){$(id).addEventListener("input",onChange);});
+document.querySelectorAll("#nb button").forEach(function(b){b.addEventListener("click",function(){S.bases=+b.getAttribute("data-n");saveS();renderAll();});});
+document.querySelectorAll("#qs button").forEach(function(b){b.addEventListener("click",function(){S.lvl=+b.getAttribute("data-l");$("lvl").value=S.lvl;saveS();renderAll();});});
+
+S.bases=clampInt(S.bases,1,4,4);
+writeInputs(); renderAll();
+})();
+</script>
+<script src="../nav.js" onerror="void 0"></script>
+<script>
+// gorgon.live nav bar: push the sticky jump bar and anchor offsets below it
+(function () {
+  var gnav = document.getElementById('gorgon-nav');
+  if (gnav) document.documentElement.style.setProperty('--gn', gnav.offsetHeight + 'px');
+}());
+</script>
+</body>
+</html>
