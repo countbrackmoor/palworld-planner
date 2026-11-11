@@ -176,7 +176,7 @@ button.armed{border-color:var(--warn);color:var(--warn)}
   <h1>Palworld Base Planner</h1>
   <p class="lead">Set your level, how many bases you can place and your worker cap. The base roles, unlock ladder, carry list, checklist and material totals all follow. I'm assuming items don't move between bases on their own.</p>
   <p class="legend"><span><span class="g">●</span> two or more sources, or game data</span><span><span class="g">◐</span> one source, or sources disagree</span><span><span class="g">○</span> unverified, check in game</span></p>
-  <div class="eyebrow">Checked 9–10 Nov 2026 · data tables v1.0.5</div>
+  <div class="eyebrow">Checked 9–11 Nov 2026 · Palworld 1.0.x</div>
 </header>
 
 <section id="setup">
@@ -205,7 +205,7 @@ button.armed{border-color:var(--warn);color:var(--warn)}
     </div>
     <div class="statusline" id="status"></div>
   </div>
-  <p class="foot">Level means the unlock level shown on each structure, not base level. Base level comes from base missions and decides how many bases you can place. Default limit is 4 bases per guild, up to 10 in World Settings.</p>
+  <p class="foot">Level means the unlock level shown on each structure, not base level. Base level comes from base missions and decides how many bases you can place. Default limit is 4 bases per guild. The server setting goes up to 10.</p>
 </section>
 
 <nav class="jump" aria-label="Sections">
@@ -221,7 +221,7 @@ button.armed{border-color:var(--warn);color:var(--warn)}
 
 <section id="ladder">
   <h2>Unlock ladder</h2>
-  <p class="sec-sub">What you have and what's next. Where two sources disagree on the level, the table shows the first and notes the other.</p>
+  <p class="sec-sub">What you have and what's next. Levels are the technology level shown in the tech tree. Recipes that unlock separately from their station are listed too.</p>
   <div class="tw"><table><thead><tr><th></th><th>Structure</th><th style="text-align:right">Level</th><th>Status</th><th>Note</th></tr></thead><tbody id="ladder-out"></tbody></table></div>
 </section>
 
@@ -230,7 +230,7 @@ button.armed{border-color:var(--warn);color:var(--warn)}
   <p class="sec-sub">Paloxite Ingots gate the Recycler, the Synthesizer and the Hatchery, so this is the bottleneck once you reach it.</p>
   <div id="chain-lock" class="skip" hidden></div>
   <figure class="fig" id="chain-fig">
-    <svg viewBox="0 0 360 444" role="img" aria-label="Paloxite Ore, Holy Water and Soralite go into the Ancient Furnace at the ancient base, which makes Paloxite Ingots. The ingots build the Recycler at the ancient base, the Synthesizer at the ore base and the Hatchery at the breeding base. The Recycler returns Mythical Wood, Cores, Radiant Gems and Paloxite, which loops back.">
+    <svg viewBox="0 0 360 444" role="img" aria-label="Paloxite Ore, Holy Water and Soralite go into the Ancient Furnace at the ancient base, which makes Paloxite Ingots once the recipe unlocks at level 74. The ingots build the Recycler at the ancient base, the Synthesizer at the ore base and the Hatchery at the breeding base. The Recycler returns Mythical Wood, Paloxite, Radiant Gems and sometimes Cores, and the Paloxite loops back.">
       <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
       <rect class="bx dash" x="20" y="8" width="100" height="62" rx="6"/>
       <text class="t" x="70" y="27" text-anchor="middle">Paloxite Ore</text>
@@ -239,7 +239,7 @@ button.armed{border-color:var(--warn);color:var(--warn)}
       <rect class="bx dash" x="130" y="8" width="100" height="62" rx="6"/>
       <text class="t" x="180" y="27" text-anchor="middle">Holy Water</text>
       <text class="s" x="180" y="44" text-anchor="middle">World Tree,</text>
-      <text class="s" x="180" y="58" text-anchor="middle">fishing, drops</text>
+      <text class="s" x="180" y="58" text-anchor="middle">Teafant Springs</text>
       <rect class="bx" x="240" y="8" width="100" height="62" rx="6"/>
       <text class="t" x="290" y="27" text-anchor="middle">Soralite</text>
       <text class="s" x="290" y="44" text-anchor="middle">Quarry,</text>
@@ -250,7 +250,7 @@ button.armed{border-color:var(--warn);color:var(--warn)}
       <text class="q" x="78" y="98">×2</text><text class="q" x="188" y="98">×1</text><text class="q" x="298" y="98">×1</text>
       <rect class="bxb" x="20" y="118" width="320" height="52" rx="8"/>
       <text class="t" x="180" y="140" text-anchor="middle">Ancient Furnace · ancient base</text>
-      <text class="s" x="180" y="158" text-anchor="middle">needs a Kindling Lv 6+ and a Cooling Lv 6+ Pal</text>
+      <text class="s" x="180" y="158" text-anchor="middle">Kindling + Cooling Pals · recipe unlocks at Lv 74</text>
       <line class="ln" x1="180" y1="170" x2="180" y2="196" marker-end="url(#ah)"/>
       <text class="q" x="190" y="187">1 craft = 1 ingot</text>
       <rect class="bxb" x="100" y="198" width="160" height="34" rx="17"/>
@@ -276,19 +276,19 @@ button.armed{border-color:var(--warn);color:var(--warn)}
       <g id="sink-hat">
         <rect class="bxc" x="240" y="270" width="100" height="78" rx="6"/>
         <text class="t" x="290" y="289" text-anchor="middle">Hatchery</text>
-        <text class="q" x="290" y="306" text-anchor="middle">100† ingots</text>
-        <text class="s" x="290" y="321" text-anchor="middle">+ 20 Cores</text>
+        <text class="q" x="290" y="306" text-anchor="middle">100 ingots</text>
+        <text class="s" x="290" y="321" text-anchor="middle">+ 50 AI Cores</text>
         <text class="s" x="290" y="336" text-anchor="middle">breeding base</text>
       </g>
       <line class="ln" x1="70" y1="348" x2="70" y2="376" marker-end="url(#ah)"/>
       <text class="q" x="78" y="366">relics + Holy Water in</text>
       <rect class="bxb" x="20" y="378" width="320" height="56" rx="8"/>
       <text class="t" x="180" y="398" text-anchor="middle">Recycler returns</text>
-      <text class="s" x="180" y="414" text-anchor="middle">Mythical Wood, Cores, Radiant Gems, Paloxite*</text>
+      <text class="s" x="180" y="414" text-anchor="middle">Mythical Wood, Paloxite*, Radiant Gems, some Cores</text>
       <text class="s" x="180" y="428" text-anchor="middle">*ore or ingot is unconfirmed</text>
       <path class="ln dash" d="M20 406H8V39H18" marker-end="url(#ah)"/>
     </svg>
-    <figcaption>Dashed boxes are hand-carried from the World Tree, where you can't build. Faded machines aren't unlocked at your level. The dashed loop is the Recycler's Paloxite coming back. If it returns ingots, they skip the furnace. † The Hatchery's 100 ingots and 50 AI Cores come from one guide.</figcaption>
+    <figcaption>Dashed boxes are hand-carried from the World Tree, where you can't build. Faded machines aren't unlocked at your level. The dashed loop is the Recycler's Paloxite coming back. If it returns ingots, they skip the furnace. The Hatchery also takes 30 Parts and 20 Cores.</figcaption>
   </figure>
 </section>
 
@@ -317,7 +317,7 @@ button.armed{border-color:var(--warn);color:var(--warn)}
     <label class="opt" for="o-synth">Synthesizers <input type="number" id="o-synth" min="0" max="4" value="1" inputmode="numeric"> <span class="tag" id="h-syn"></span></label>
   </div>
   <div class="tw"><table id="calc"><thead><tr><th>Material</th><th style="text-align:right">Total</th><th>Where it comes from</th></tr></thead><tbody id="calc-body"></tbody></table></div>
-  <p class="foot">Each ingot is 1 Soralite, 2 Paloxite Ore and 1 Holy Water. Tech Point costs differ between sources, so I left them out. † The Hatchery's 100 ingots and 50 AI Cores are one guide's figures. Other sources list only 30 Parts and 20 Cores.</p>
+  <p class="foot">Each ingot is 1 Soralite, 2 Paloxite Ore and 1 Holy Water. Tech Point costs differ between sources, so I left them out. Build costs match across at least two sources, except the Synthesizer (see What I couldn't confirm).</p>
 </section>
 
 <section id="recipes">
@@ -325,14 +325,14 @@ button.armed{border-color:var(--warn);color:var(--warn)}
   <div class="tw"><table>
     <thead><tr><th></th><th>Recipe</th><th>Notes</th></tr></thead>
     <tbody>
-      <tr><td class="g">●</td><td><b>Paloxite Ingot</b><br>1 Soralite + 2 Paloxite Ore + 1 Holy Water</td><td>Ancient Furnace only.</td></tr>
-      <tr><td class="g">◐</td><td><b>Soralite Ingot</b><br>2 Soralite + 2 Pure Quartz</td><td>One database lists it.</td></tr>
-      <tr><td class="g">●</td><td><b>Hexolite</b><br>1 Chromite + 1 Hexolite Quartz</td><td>Gigantic Furnace or Ancient Furnace. The old 5 / 12 / 20 recipe is pre-1.0.</td></tr>
-      <tr><td class="g">●</td><td><b>Coralum Ingot</b><br>2 Coralum Ore + 5 Coal</td><td>One database says Pal Gear Workbench, others say Gigantic or Ancient Furnace.</td></tr>
+      <tr><td class="g">●</td><td><b>Paloxite Ingot</b><br>1 Soralite + 2 Paloxite Ore + 1 Holy Water</td><td>Recipe unlocks at Lv 74, not with the furnace at 66. Two guides say Ancient Furnace; Pindrop says Production Assembly Line.</td></tr>
+      <tr><td class="g">◐</td><td><b>Soralite Ingot</b><br>2 Soralite + 2 Pure Quartz</td><td>Ancient Furnace, Lv 66. Feeds the Ancient Workbench.</td></tr>
+      <tr><td class="g">●</td><td><b>Hexolite</b><br>1 Chromite + 1 Hexolite Quartz</td><td>Gigantic Furnace, Lv 58. The old 5 / 12 / 20 recipe is pre-1.0.</td></tr>
+      <tr><td class="g">●</td><td><b>Coralum Ingot</b><br>2 Coralum Ore + 5 Coal</td><td>Refined at the Gigantic Furnace. One source puts the recipe at Lv 62.</td></tr>
       <tr><td class="g">◐</td><td><b>Chromite</b> is used in 3 recipes</td><td>Hexolite and Mythical Wooden Board. I couldn't find the third.</td></tr>
       <tr><td class="g">◐</td><td><b>Coralum Ore</b> is used in 3 recipes</td><td>Coralum Ingot and two fishing rods.</td></tr>
-      <tr><td class="g">●</td><td><b>Plasteel</b><br>2 Crude Oil + 5 Ore</td><td>Electric Furnace.</td></tr>
-      <tr><td class="g">◐</td><td><b>Synthesizer menu (12)</b><br>Wood, Stone, Hardwood, Paldium Fragment, Ore, Coal, Chromite, Sulfur, Pure Quartz, Hexolite Quartz, Coralum Ore, Soralite</td><td>No Paloxite. One Pal, Mining or Lumbering Lv 6+, 800 W. Output stops at 9,999 (one source).</td></tr>
+      <tr><td class="g">●</td><td><b>Plasteel</b><br>2 Crude Oil + 5 Ore</td><td>Electric Furnace, Lv 50.</td></tr>
+      <tr><td class="g">◐</td><td><b>Synthesizer menu (12)</b><br>Wood, Stone, Hardwood, Paldium Fragment, Ore, Coal, Chromite, Sulfur, Pure Quartz, Hexolite Quartz, Coralum Ore, Soralite</td><td>No Paloxite. One Pal, Lumbering for wood, Mining for the rest. Draws 800 power. Output stops at 9,999 (one source).</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -342,25 +342,41 @@ button.armed{border-color:var(--warn);color:var(--warn)}
   <p class="sec-sub">Check these in game before you rely on them.</p>
   <ul class="doubts">
     <li><span class="g">○</span><div><b>No transfer between bases.</b> My assumption, about 90% sure. If items do move, the carry list shrinks.</div></li>
-    <li><span class="g">◐</span><div><b>Unlock levels.</b> Pure Quartz Quarry, Hexolite Quartz Mine and the High-Pressure Extractor differ by 1 between Palpedia and Pindrop. Sulfur Quarry differs by 1 in one source. The Coal Quarry is 37 in one and 53 in another, which is a real conflict.</div></li>
-    <li><span class="g">○</span><div><b>Structures with no level here.</b> Ore Mining Site, Crude Oil Extractor, Electric Furnace, Breeding Farm and the Ancient Workbench had no level I could verify. The planner treats them as available at any level, except the Workbench, which I gated with the Ancient Furnace as a guess.</div></li>
-    <li><span class="g">◐</span><div><b>Fourth base.</b> One tracker derives base level 21, three guides say 25. I have no verified level for bases 2 and 3.</div></li>
+    <li><span class="g">◐</span><div><b>World Tree coordinates.</b> Two guides put the Base of the World Tree fast travel point at -838, 689, in the far northwest. Two others print 841, 639 with the sign dropped, and the earlier version of this page copied that. The X sign is settled; the Y value is within about 50.</div></li>
+    <li><span class="g">◐</span><div><b>Where Paloxite Ingots are made.</b> Two guides say the Ancient Furnace. Pindrop's item page says the Production Assembly Line. All four sources agree the recipe unlocks at Lv 74.</div></li>
+    <li><span class="g">◐</span><div><b>Synthesizer cost.</b> Pindrop and palworld.tools say 50 Paloxite Ingots and 10 Cores. One guide lists 100 ingots, 10 Holy Water, 20 Thermal Cores and 20 Cryogenic Coolant.</div></li>
+    <li><span class="g">◐</span><div><b>Work-suitability levels.</b> Pindrop's structure pages list Lv 1+ for the quarries and Recycler. palworld.tools lists Lv 10 workers. Neither gives numbers for the furnaces. I removed the Lv 6+ figures the earlier version showed.</div></li>
+    <li><span class="g">○</span><div><b>Structures with no level here.</b> Ore Mining Site, Electric Furnace and Breeding Farm had no level I could verify. The planner treats them as available at any level.</div></li>
+    <li><span class="g">◐</span><div><b>Fourth base.</b> Pindrop gives base levels 8, 15 and 25 for bases 2, 3 and 4, and three other guides agree on 25. One tracker derives 21.</div></li>
     <li><span class="g">◐</span><div><b>Tech Point costs.</b> A Palpedia table disagrees with Pindrop's per-structure pages, and the Ancient points are separate. I left costs out.</div></li>
-    <li><span class="g">◐</span><div><b>Oil extractor.</b> Pindrop says the High-Pressure Extractor doesn't need an oil node. Earlier guides say the regular one does. v1 said both need one, which was wrong for the High-Pressure model.</div></li>
-    <li><span class="g">◐</span><div><b>Hatchery cost.</b> 30 Parts and 20 Cores agree across sources. The 100 Paloxite Ingots and 50 AI Cores come from one guide, about 75% sure.</div></li>
-    <li><span class="g">○</span><div><b>Recycler output.</b> Sources say it returns "Paloxite" without saying ore or ingots.</div></li>
+    <li><span class="g">◐</span><div><b>Recycler output.</b> Mythical Wood and Paloxite are guaranteed on every relic tier, with Radiant Gems at low rates and Cores from tier 4 and 5 relics. Sources don't say whether the Paloxite is ore or ingots. One guide says it also takes Holy Water.</div></li>
+    <li><span class="g">◐</span><div><b>Holy Water source.</b> One guide says Teafant Springs in the World Tree, 10 per touch. Another ties it to a quest with the World Tree Guardian.</div></li>
     <li><span class="g">◐</span><div><b>Worker cap.</b> Every preset gives 15. The level table reaches 30 at base level 30, and the setting maxes at 50.</div></li>
-    <li><span class="g">○</span><div><b>Worker counts</b> are my estimates, recounted per structure plus a hauling allowance. They differ slightly from v1's.</div></li>
+    <li><span class="g">○</span><div><b>Worker counts</b> are my estimates, recounted per structure plus a hauling allowance.</div></li>
     <li><span class="g">○</span><div><b>Merged bases.</b> The 1, 2 and 3 base layouts are my suggestions. Nothing in the sources says what works best.</div></li>
     <li><span class="g">◐</span><div><b>Wiping bases.</b> One page covering 1.0 (checked Aug 2026) says disassembly refunds 100% and Pal workstations auto-dismantle with the Palbox. It says base level is a separate track but never says whether it resets when the last Palbox goes. I couldn't confirm that.</div></li>
   </ul>
   <p class="foot">Sources:</p>
   <div class="sources">
+    <a href="https://www.palworldcompanion.com/guides/world-tree">World Tree entrance</a>
+    <a href="https://thegameslayer.com/guides/palworld-how-to-unlock-the-world-tree-area/">World Tree entrance (2)</a>
     <a href="https://pindrop.gg/palworld/structures/ancient-furnace">Ancient Furnace</a>
     <a href="https://pindrop.gg/palworld/structures/ancient-material-synthesizer">Synthesizer</a>
     <a href="https://pindrop.gg/palworld/structures/ancient-relic-recycler">Recycler</a>
-    <a href="https://www.thepalprofessor.com/buildings/Ancient-Hatchery">Hatchery</a>
-    <a href="https://www.palmods.gg/blog/palworld-ancient-hatchery-50-ai-cores">Hatchery cost</a>
+    <a href="https://pindrop.gg/palworld/structures/ancient-hatchery">Hatchery</a>
+    <a href="https://palworld.wiki.gg/wiki/Ancient_Hatchery">Hatchery (wiki)</a>
+    <a href="https://pindrop.gg/palworld/structures/ancient-workbench">Ancient Workbench</a>
+    <a href="https://pindrop.gg/palworld/structures/sulfur-mine">Sulfur Quarry</a>
+    <a href="https://pindrop.gg/palworld/structures/pure-quartz-quarry">Pure Quartz Quarry</a>
+    <a href="https://pindrop.gg/palworld/structures/hexolite-quartz-mine">Hexolite Quartz Mine</a>
+    <a href="https://pindrop.gg/palworld/structures/high-pressure-crude-oil-extractor">High-Pressure Extractor</a>
+    <a href="https://www.switchbladegaming.com/palworld/crude-oil-base/">Crude oil</a>
+    <a href="https://www.palworld.tools/items/paloxite-ingot">Paloxite Ingot</a>
+    <a href="https://allthings.how/palworld-1-0-best-paloxite-farming-locations-in-the-world-tree/">Paloxite farming</a>
+    <a href="https://gamever.io/knowledge-base/dog-coin-in-palworld-every-source-ranked-by-rate">Recycler tables</a>
+    <a href="https://www.palmods.gg/guides/items/ancient-civilization-core">Core sources</a>
+    <a href="https://pindrop.gg/palworld/guides/best-mining-pals">Mining Pals</a>
+    <a href="https://www.gamerfuzion.com/palworld-best-base-locations/">Base coordinates</a>
     <a href="https://www.palworld.tools/items/hexolite">Hexolite</a>
     <a href="https://nodecraft.com/support/games/palworld/general/how-to-get-paloxite-and-paloxite-ingots">Paloxite</a>
     <a href="https://progametalk.com/palworld/how-to-get-ancient-material-synthesizer/">Synthesizer menu</a>
@@ -396,19 +412,24 @@ function calcTotals(o){
 
 /*PLAN-START*/
 var UNLOCK=[
-  {k:"coal",n:"Coal Quarry",l:37,g:"○",x:"Palpedia says 37, an earlier source said 53."},
-  {k:"sulfur",n:"Sulfur Quarry",l:47,g:"◐",x:"One source says 46."},
-  {k:"hpext",n:"High-Pressure Crude Oil Extractor",l:52,g:"◐",x:"Pindrop says 51. Doesn't need an oil node."},
-  {k:"quartz",n:"Pure Quartz Quarry",l:53,g:"◐",x:"Pindrop says 52."},
-  {k:"gfurn",n:"Gigantic Furnace",l:58,g:"●",x:"Hexolite and Coralum Ingot."},
-  {k:"hexmine",n:"Hexolite Quartz Mine",l:63,g:"◐",x:"Pindrop says 62."},
-  {k:"afurn",n:"Ancient Furnace",l:66,g:"●",x:"Inputs come from the World Tree."},
+  {k:"coal",n:"Coal Quarry",l:37,g:"●",x:"An older source said 53."},
+  {k:"sulfur",n:"Sulfur Quarry",l:46,g:"●",x:""},
+  {k:"crude",n:"Crude Oil Extractor",l:50,g:"●",x:"Must sit on an oil node."},
+  {k:"hpext",n:"High-Pressure Crude Oil Extractor",l:51,g:"●",x:"No oil node needed. Open ground inside the base."},
+  {k:"quartz",n:"Pure Quartz Quarry",l:52,g:"●",x:""},
+  {k:"cutter",n:"Plasma Multicutter",l:54,g:"◐",x:"Tool, not a structure. Fastest on endgame nodes."},
+  {k:"gfurn",n:"Gigantic Furnace",l:58,g:"●",x:"Hexolite."},
+  {k:"hexmine",n:"Hexolite Quartz Mine",l:62,g:"●",x:""},
+  {k:"coralum",n:"Coralum Ingot recipe",l:62,g:"◐",x:"One source."},
+  {k:"afurn",n:"Ancient Furnace",l:66,g:"●",x:"Soralite Ingots from here. Paloxite Ingots wait for Lv 74."},
+  {k:"awb",n:"Ancient Workbench",l:67,g:"●",x:"Built from Soralite Ingots, AI Cores and Bio Batteries."},
   {k:"soralite",n:"Soralite Quarry",l:72,g:"●",x:""},
+  {k:"paloxite",n:"Paloxite Ingot recipe",l:74,g:"●",x:"Needs World Tree inputs."},
   {k:"recycler",n:"Ancient Relic Recycler",l:74,g:"●",x:""},
   {k:"hatch",n:"Ancient Hatchery",l:76,g:"●",x:""},
   {k:"synth",n:"Ancient Material Synthesizer",l:78,g:"●",x:""}
 ];
-var UNCHECKED=["Ore Mining Site","Crude Oil Extractor","Electric Furnace","Breeding Farm and Egg Incubators","Ancient Workbench"];
+var UNCHECKED=["Ore Mining Site","Electric Furnace","Breeding Farm and Egg Incubators"];
 var UL={}; (function(){for(var i=0;i<UNLOCK.length;i++){UL[UNLOCK[i].k]=UNLOCK[i];}})();
 
 var ROLES={
@@ -418,22 +439,22 @@ var ROLES={
   D:{cls:"d",n:"Oil base",d:"Last to build. Nothing waits on it."}
 };
 var JOBS=[
-  {id:"a_ore",r:"A",n:"Ore Mining Site",key:null,tree:false,lo:2,hi:2,x:"Astegon, Anubis and Aegidron are strong miners. Astegon is a dark type, so it works nights."},
+  {id:"a_ore",r:"A",n:"Ore Mining Site",key:null,tree:false,lo:2,hi:2,x:"Top miners: Aegidron (Mining 8), Astegon and Blazamut (7), Anubis (6)."},
   {id:"a_coal",r:"A",n:"Coal Quarry",key:"coal",tree:false,lo:1,hi:1,x:""},
   {id:"a_sulf",r:"A",n:"Sulfur Quarry",key:"sulfur",tree:false,lo:1,hi:1,x:""},
   {id:"a_quartz",r:"A",n:"Pure Quartz Quarry",key:"quartz",tree:false,lo:1,hi:1,x:""},
   {id:"a_hex",r:"A",n:"Hexolite Quartz Mine",key:"hexmine",tree:false,lo:1,hi:1,x:""},
-  {id:"a_furn",r:"A",n:"Furnaces",key:null,tree:false,lo:2,hi:3,x:"Kindling Pals. Hexolite and Coralum Ingot need the Gigantic Furnace (Lv 58)."},
-  {id:"a_syn",r:"A",n:"Ancient Material Synthesizer",key:"synth",tree:false,lo:1,hi:1,x:"Needs Mining or Lumbering Lv 6+. Swap its recipe between Chromite and Coralum Ore as you run short."},
-  {id:"b_sor",r:"B",n:"Soralite Quarry",key:"soralite",tree:false,lo:1,hi:1,x:"Mining Lv 6+ Pal. Blazamut is one guide's pick."},
-  {id:"b_furn",r:"B",n:"Ancient Furnace",key:"afurn",tree:true,lo:2,hi:2,x:"Kindling Lv 6+ and Cooling Lv 6+ Pals."},
-  {id:"b_rec",r:"B",n:"Ancient Relic Recycler",key:"recycler",tree:true,lo:1,hi:1,x:"Handiwork Pal."},
-  {id:"b_wb",r:"B",n:"Ancient Workbench",key:"afurn",tree:true,lo:1,hi:2,x:"Handiwork plus Medicine Production. Unlock level not verified, gated with the furnace as a guess."},
+  {id:"a_furn",r:"A",n:"Furnaces",key:null,tree:false,lo:2,hi:3,x:"Kindling Pals. Hexolite needs the Gigantic Furnace (Lv 58), and Coralum Ingots are refined there too."},
+  {id:"a_syn",r:"A",n:"Ancient Material Synthesizer",key:"synth",tree:false,lo:1,hi:1,x:"One Pal: Lumbering for wood, Mining for ore. Swap its recipe between Chromite and Coralum Ore as you run short."},
+  {id:"b_sor",r:"B",n:"Soralite Quarry",key:"soralite",tree:false,lo:1,hi:1,x:"Mining Pal. Soralite only spawns on the Sunreach islands, and the quarry costs 100 to build."},
+  {id:"b_furn",r:"B",n:"Ancient Furnace",key:"afurn",tree:false,lo:2,hi:2,x:"Kindling and Cooling Pals. Soralite Ingots from Lv 66, Paloxite Ingots from Lv 74 with World Tree inputs."},
+  {id:"b_rec",r:"B",n:"Ancient Relic Recycler",key:"recycler",tree:true,lo:1,hi:1,x:"Handiwork Pal. Needs 50 Mythical Wood from the World Tree."},
+  {id:"b_wb",r:"B",n:"Ancient Workbench",key:"awb",tree:false,lo:1,hi:2,x:"Handiwork and Medicine Production Pals."},
   {id:"c_ranch",r:"C",n:"Ranch",key:null,tree:false,lo:4,hi:5,x:"Chikipi (eggs), Mozzarina (milk), Beegarde (honey), Lamball (wool). Over-assign Beegarde, since honey is usually the limit."},
   {id:"c_food",r:"C",n:"Wheat, Mill, plots, Cooking Pot",key:null,tree:false,lo:4,hi:5,x:""},
   {id:"c_breed",r:"C",n:"Breeding Farm and Egg Incubators",key:null,tree:false,lo:3,hi:4,x:""},
-  {id:"c_hatch",r:"C",n:"Ancient Hatchery",key:"hatch",tree:false,lo:1,hi:2,x:"Hatches on its own, so the Grintale egg-duplication trick no longer applies."},
-  {id:"d_ext",r:"D",n:"Crude Oil Extractor",key:null,tree:false,lo:1,hi:2,x:"The regular one needs an oil node. From Lv 52 the High-Pressure model is an option and doesn't."},
+  {id:"c_hatch",r:"C",n:"Ancient Hatchery",key:"hatch",tree:false,lo:1,hi:2,x:"Runs on cake and collects its own eggs, so Grintale and Broncherry partner skills don't work on it."},
+  {id:"d_ext",r:"D",n:"Crude Oil Extractor",key:"crude",tree:false,lo:1,hi:2,x:"The regular one needs an oil node. From Lv 51 the High-Pressure model doesn't."},
   {id:"d_elec",r:"D",n:"Electric Furnace (Plasteel)",key:null,tree:false,lo:1,hi:2,x:"2 Crude Oil plus 5 Ore per Plasteel."},
   {id:"d_log",r:"D",n:"Logging Site II or a second Synthesizer",key:null,tree:false,lo:1,hi:2,x:""}
 ];
@@ -472,10 +493,10 @@ function planBases(st){
   return {bases:out,skipped:skipped,roleBase:used};
 }
 var CARRY=[
-  {from:"T",to:"B",what:"Paloxite Ore, Holy Water, 50 Mythical Wood, relics",need:["b_furn"]},
-  {from:"A",to:"B",what:"Pure Quartz. Coralum Ingots if you build the furnace.",need:["b_furn","a_quartz"]},
-  {from:"B",to:"A",what:"50 Paloxite Ingots for the Synthesizer",need:["a_syn","b_furn"]},
-  {from:"B",to:"C",what:"100† Paloxite Ingots for the Hatchery, plus Cores, Parts, AI Cores",need:["c_hatch","b_furn"]},
+  {from:"T",to:"B",what:"Paloxite Ore, Holy Water, 50 Mythical Wood, relics",need:["b_rec"]},
+  {from:"A",to:"B",what:"Pure Quartz for Soralite Ingots. Coralum Ingots if you build the furnace.",need:["b_wb","a_quartz"]},
+  {from:"B",to:"A",what:"50 Paloxite Ingots for the Synthesizer",need:["a_syn","b_rec"]},
+  {from:"B",to:"C",what:"100 Paloxite Ingots for the Hatchery, plus 50 AI Cores, 30 Parts, 20 Cores",need:["c_hatch","b_rec"]},
   {from:"A",to:"D",what:"Ore for Plasteel",need:["d_elec"]}
 ];
 function carryRows(st,plan){
@@ -527,10 +548,10 @@ function stateObj(){return {lvl:S.lvl,bases:S.bases,tree:S.tree};}
 /* bases */
 function siteNote(roles){
   var h="";
-  if(roles.indexOf("A")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Ore site, if you want one: summit near 190, -40. About 8 ore nodes, raids can't path up. Lay stone foundations so Pals don't slide off.</div>";
-  if(roles.indexOf("B")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Ancient site: anywhere buildable. Near the Foot of the World Tree (about 841, 639) shortens trips, and building inside the tree is blocked.</div>";
+  if(roles.indexOf("A")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Ore site, if you want one: a ridge near the Sealed Realm of the Guardian, about 180 to 190, -40. Roughly 8 ore nodes. One guide says raids can't path up. Lay stone foundations so Pals don't slide off.</div>";
+  if(roles.indexOf("B")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Ancient site: anywhere buildable. You can't build inside the World Tree. Its entrance, the Base of the World Tree fast travel point, is in the far northwest at about -838, 689, so a base near it shortens trips.</div>";
   if(roles.indexOf("C")>=0)h+="<div class=\"site\">This base holds your best Pals. Raids come in waves, so put the Palbox in the middle, not on an outer wall.</div>";
-  if(roles.indexOf("D")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Oil site: a regular extractor needs an oil node, one guide lists one near -646, 270.</div>";
+  if(roles.indexOf("D")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Oil site: a regular extractor needs an oil node. One guide lists the Sakurajima oil fields at -646, 270.</div>";
   return h;
 }
 function renderBases(plan){
@@ -596,10 +617,10 @@ function renderLadder(){
 
 /* chain */
 function renderChain(){
-  var ok=isOpen("afurn",S)&&S.tree;
+  var ok=isOpen("paloxite",S)&&S.tree;
   $("chain-fig").hidden=!ok; $("chain-lock").hidden=ok;
   if(!ok){
-    var w=reasons("afurn",true,S).join(" and ");
+    var w=reasons("paloxite",true,S).join(" and ");
     $("chain-lock").textContent="Locked: the Paloxite chain needs "+w+". Come back when you have it.";
   }
   $("sink-rec").setAttribute("class",isOpen("recycler",S)?"":"off");
@@ -632,22 +653,22 @@ var PHASES=[
   {t:"Ore base",role:"A",items:[
     {k:"p1a",x:"Place the Palbox, then the Ore site and whichever quarries you have unlocked."},
     {k:"p1b",x:"Add furnaces with Kindling Pals, plus transporters."},
-    {k:"p1c",x:"Stock 200 Coralum Ore and 500 Coal, and smelt 100 Coralum Ingot for the Ancient Furnace.",need:["gfurn"],only:"furn"}]},
+    {k:"p1c",x:"Stock 200 Coralum Ore and 500 Coal, and smelt 100 Coralum Ingot for the Ancient Furnace.",need:["coralum"],only:"furn"}]},
   {t:"Ancient base",role:"B",items:[
-    {k:"p2a",x:"Place the Palbox and the Soralite Quarry with a Mining Lv 6+ Pal.",need:["soralite"]},
-    {k:"p2b",x:"Build the Ancient Furnace if needed, then assign a Kindling Lv 6+ and a Cooling Lv 6+ Pal.",need:["afurn"],tree:true}]},
+    {k:"p2a",x:"Place the Palbox and the Soralite Quarry with a Mining Pal.",need:["soralite"]},
+    {k:"p2b",x:"Build the Ancient Furnace if needed, then assign Kindling and Cooling Pals.",need:["afurn"]}]},
   {t:"World Tree runs",items:[
-    {k:"p3a",x:"Drink Holy Water before approaching nodes. Without it, Paloxite and Mythical Wood nodes vanish.",need:["afurn"],tree:true},
-    {k:"p3b",x:"Mine Paloxite Ore with the Plasma Multicutter.",need:["afurn"],tree:true},
+    {k:"p3a",x:"Drink World Tree Holy Water before mining, or bring a Pal with a World Tree passive. Without either, Paloxite and Mythical Wood nodes vanish.",need:["paloxite"],tree:true},
+    {k:"p3b",x:"Mine Paloxite Ore. The Plasma Multicutter (Lv 54) is fastest, and Digtoise's partner skill also works.",need:["paloxite"],tree:true},
     {k:"p3c",x:"Gather 50 Mythical Wood, spare Holy Water and relics.",need:["recycler"],tree:true}]},
   {t:"Ingots, then machines",items:[
     {k:"p4a",x:"Smelt 50 Paloxite Ingots and build the Recycler.",need:["recycler"],tree:true},
-    {k:"p4b",x:"Feed it relics and Holy Water. Collect the Paloxite it returns.",need:["recycler"],tree:true},
+    {k:"p4b",x:"Feed it relics. Collect the Mythical Wood and Paloxite it returns.",need:["recycler"],tree:true},
     {k:"p4c",x:"Smelt 50 more ingots, carry them to the ore base, build the Synthesizer on Chromite.",need:["synth"],tree:true}]},
   {t:"Breeding base",role:"C",items:[
     {k:"p5a",x:"Ranch, wheat and Mill, vegetable plots, Cooking Pot."},
     {k:"p5b",x:"Breeding Farm and a few Egg Incubators."},
-    {k:"p5c",x:"Hatchery once you hold 100† ingots, 50 AI Cores, 30 Parts and 20 Cores.",need:["hatch"]}]},
+    {k:"p5c",x:"Hatchery once you hold 100 ingots, 50 AI Cores, 30 Parts and 20 Cores. Keep it stocked with cake.",need:["hatch"]}]},
   {t:"Oil base",role:"D",items:[
     {k:"p6a",x:"Oil extractors, Electric Furnace, and a wood source."}]}
 ];
@@ -713,13 +734,13 @@ function renderCalc(){
   var t=calcTotals({furnace:S.furn,recycler:S.rec,hatchery:S.hat,synth:S.syn});
   var rows=[
     ["Paloxite Ingots",t.ingots,"Ancient Furnace, ancient base"],
-    ["Paloxite Ore",t.ore,"World Tree, hand-mined with Holy Water active"],
+    ["Paloxite Ore",t.ore,"World Tree, hand-mined with Holy Water or a World Tree passive Pal"],
     ["Soralite",t.soralite,"Soralite Quarry, ancient base"],
-    ["World Tree Holy Water",t.water,"Plus extra for the mining buff"],
-    ["Ancient Civilization Cores",t.cores,"Raid bosses, oil rig chests, expeditions, Recycler rolls"],
+    ["World Tree Holy Water",t.water,"Plus extra for mining, unless a Pal has a World Tree passive"],
+    ["Ancient Civilization Cores",t.cores,"Raid bosses, expeditions, oil rig chests, high-tier relics in the Recycler"],
     ["Ancient Civilization Parts",t.parts,"Recycler 30, Hatchery 30"],
     ["Mythical Wood",t.wood,"World Tree, 50 for the Recycler"],
-    ["AI Cores",t.ai,"Hatchery only, one source"],
+    ["AI Cores",t.ai,"Hatchery"],
     ["Thermal Cores",t.thermal,"Furnace build"],
     ["Computers",t.computer,"Furnace build"],
     ["Coralum Ingots",t.coralumIngot,"Furnace build, made at the ore base"],
