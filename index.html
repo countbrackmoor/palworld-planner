@@ -174,9 +174,9 @@ button.armed{border-color:var(--warn);color:var(--warn)}
 <header>
   <div class="eyebrow">Palworld 1.0.x · adjustable planner · v2</div>
   <h1>Palworld Base Planner</h1>
-  <p class="lead">Set your level, how many bases you can place and your worker cap. The base roles, unlock ladder, carry list, checklist and material totals all follow. I'm assuming items don't move between bases on their own.</p>
+  <p class="lead">Set your level, how many bases you can place and your worker cap. The base roles, unlock ladder, carry list, checklist and material totals all follow. Items move between bases through the Guild Chest (Lv 41, 54 shared slots). Beyond that, nothing moves itself as far as I can confirm.</p>
   <p class="legend"><span><span class="g">●</span> two or more sources, or game data</span><span><span class="g">◐</span> one source, or sources disagree</span><span><span class="g">○</span> unverified, check in game</span></p>
-  <div class="eyebrow">Checked 9–11 Nov 2026 · Palworld 1.0.x</div>
+  <div class="eyebrow">Checked 9–13 Nov 2026 · Palworld 1.0.x</div>
 </header>
 
 <section id="setup">
@@ -209,7 +209,7 @@ button.armed{border-color:var(--warn);color:var(--warn)}
 </section>
 
 <nav class="jump" aria-label="Sections">
-  <a href="#bases">Bases</a><a href="#ladder">Unlocks</a><a href="#chain">Chain</a><a href="#carry">Carry</a><a href="#order">Order</a><a href="#totals">Totals</a><a href="#recipes">Recipes</a><a href="#doubts">Doubts</a>
+  <a href="#bases">Bases</a><a href="#ranch">Ranch</a><a href="#ladder">Unlocks</a><a href="#chain">Chain</a><a href="#carry">Carry</a><a href="#order">Order</a><a href="#totals">Totals</a><a href="#recipes">Recipes</a><a href="#doubts">Doubts</a>
 </nav>
 
 <section id="bases">
@@ -217,6 +217,21 @@ button.armed{border-color:var(--warn);color:var(--warn)}
   <p class="sec-sub" id="bases-sub"></p>
   <div class="bases" id="bases-out"></div>
   <div id="skip-out"></div>
+</section>
+
+<section id="ranch">
+  <h2>Ranch roster</h2>
+  <p class="sec-sub">Four Ranches of four Pals each. Drop types are fixed per species in 1.0, and output scales with Farming suitability and Partner Skill level, which Pal Condensation raises. Output rates aren't published, so treat this as a starting roster and adjust after a day of watching.</p>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>Ranch</th><th>Pals</th><th>Produces</th><th>Goes to</th></tr></thead>
+    <tbody>
+      <tr><td class="g">●</td><td><b>1 · Staples</b></td><td>Chikipi ×2, Mozzarina, Beegarde</td><td>Eggs, Milk, Honey</td><td>Food base</td></tr>
+      <tr><td class="g">●</td><td><b>2 · Sweets</b></td><td>Woolipop ×2, Woolipop Terra, Mozzarina</td><td>Cotton Candy, Caramel Cotton Candy, Milk</td><td>Food base</td></tr>
+      <tr><td class="g">●</td><td><b>3 · Gear</b></td><td>Sibelyx Primo, Dumud, Kelpsea, Vaelet</td><td>High Quality Cloth, High Quality Pal Oil, Aquatic Pal Fluids, crop seeds</td><td>Ancient base (Workbench), seeds to Food base</td></tr>
+      <tr><td class="g">●</td><td><b>4 · Organs</b></td><td>Rooby, Foxcicle, Sparkit, Depresso</td><td>Flame Organ, Ice Organ, Electric Organ, Venom Gland</td><td>Ancient base (Workbench)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="foot">The drops are from three 1.0 guides that agree. Which Pals to pick is my choice. Sibelyx Primo needs World Tree access, so use Sibelyx without it. Flame Organ also comes from Flambelle or Kelpsea Ignis, and Venom Gland from Caprity Noct. Those four organ and gland types are the only ones any source lists as ranch drops. Cakes need Eggs, Milk and Honey from Ranch 1, and the Cotton Candy cakes need Ranch 2.</p>
 </section>
 
 <section id="ladder">
@@ -230,7 +245,7 @@ button.armed{border-color:var(--warn);color:var(--warn)}
   <p class="sec-sub">Paloxite Ingots gate the Recycler, the Synthesizer and the Hatchery, so this is the bottleneck once you reach it.</p>
   <div id="chain-lock" class="skip" hidden></div>
   <figure class="fig" id="chain-fig">
-    <svg viewBox="0 0 360 444" role="img" aria-label="Paloxite Ore, Holy Water and Soralite go into the Ancient Furnace at the ancient base, which makes Paloxite Ingots once the recipe unlocks at level 74. The ingots build the Recycler at the ancient base, the Synthesizer at the ore base and the Hatchery at the breeding base. The Recycler returns Mythical Wood, Paloxite, Radiant Gems and sometimes Cores, and the Paloxite loops back.">
+    <svg viewBox="0 0 360 444" role="img" aria-label="Paloxite Ore, Holy Water and Soralite go into the Ancient Furnace at the ancient base, which makes Paloxite Ingots once the recipe unlocks at level 74. The ingots build the Recycler at the ancient base, the Synthesizer at the ore base and the Hatchery at the ancient base. The Recycler returns Mythical Wood, Paloxite, Radiant Gems and sometimes Cores, and the Paloxite loops back.">
       <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
       <rect class="bx dash" x="20" y="8" width="100" height="62" rx="6"/>
       <text class="t" x="70" y="27" text-anchor="middle">Paloxite Ore</text>
@@ -278,7 +293,7 @@ button.armed{border-color:var(--warn);color:var(--warn)}
         <text class="t" x="290" y="289" text-anchor="middle">Hatchery</text>
         <text class="q" x="290" y="306" text-anchor="middle">100 ingots</text>
         <text class="s" x="290" y="321" text-anchor="middle">+ 50 AI Cores</text>
-        <text class="s" x="290" y="336" text-anchor="middle">breeding base</text>
+        <text class="s" x="290" y="336" text-anchor="middle">ancient base</text>
       </g>
       <line class="ln" x1="70" y1="348" x2="70" y2="376" marker-end="url(#ah)"/>
       <text class="q" x="78" y="366">relics + Holy Water in</text>
@@ -288,15 +303,15 @@ button.armed{border-color:var(--warn);color:var(--warn)}
       <text class="s" x="180" y="428" text-anchor="middle">*ore or ingot is unconfirmed</text>
       <path class="ln dash" d="M20 406H8V39H18" marker-end="url(#ah)"/>
     </svg>
-    <figcaption>Dashed boxes are hand-carried from the World Tree, where you can't build. Faded machines aren't unlocked at your level. The dashed loop is the Recycler's Paloxite coming back. If it returns ingots, they skip the furnace. The Hatchery also takes 30 Parts and 20 Cores.</figcaption>
+    <figcaption>The Hatchery shares a base with the furnace, so its ingots never travel. Dashed boxes are hand-carried from the World Tree, where you can't build. Faded machines aren't unlocked at your level. The dashed loop is the Recycler's Paloxite coming back. If it returns ingots, they skip the furnace. The Hatchery also takes 30 Parts and 20 Cores.</figcaption>
   </figure>
 </section>
 
 <section id="carry">
   <h2>Carry manifest</h2>
-  <p class="sec-sub">Only the moves your setup needs. If two roles share a base, that move disappears.</p>
+  <p class="sec-sub">Only the moves your setup needs. If two roles share a base, that move disappears. Guild Chest moves still mean you drop items in one base and pick them up in another.</p>
   <div class="tw"><table>
-    <thead><tr><th>From</th><th>To</th><th>What</th></tr></thead>
+    <thead><tr><th>From</th><th>To</th><th>What</th><th>Via</th></tr></thead>
     <tbody id="carry-out"></tbody>
   </table></div>
 </section>
@@ -314,10 +329,11 @@ button.armed{border-color:var(--warn);color:var(--warn)}
   <div class="controls">
     <label class="opt"><input type="checkbox" id="o-recycler" checked> Recycler <span class="tag" id="h-rec"></span></label>
     <label class="opt"><input type="checkbox" id="o-hatchery" checked> Hatchery <span class="tag" id="h-hat"></span></label>
+    <label class="opt"><input type="checkbox" id="o-gchest" checked> Guild Chests, one per base <span class="tag" id="h-gc"></span></label>
     <label class="opt" for="o-synth">Synthesizers <input type="number" id="o-synth" min="0" max="4" value="1" inputmode="numeric"> <span class="tag" id="h-syn"></span></label>
   </div>
   <div class="tw"><table id="calc"><thead><tr><th>Material</th><th style="text-align:right">Total</th><th>Where it comes from</th></tr></thead><tbody id="calc-body"></tbody></table></div>
-  <p class="foot">Each ingot is 1 Soralite, 2 Paloxite Ore and 1 Holy Water. Tech Point costs differ between sources, so I left them out. Build costs match across at least two sources, except the Synthesizer (see What I couldn't confirm).</p>
+  <p class="foot">Each ingot is 1 Soralite, 2 Paloxite Ore and 1 Holy Water. Guild Chests cost 50 Refined Ingots, 100 Paldium Fragments and 10 Parts each. Tech Point costs differ between sources, so I left them out. Build costs match across at least two sources, except the Synthesizer (see What I couldn't confirm).</p>
 </section>
 
 <section id="recipes">
@@ -331,6 +347,11 @@ button.armed{border-color:var(--warn);color:var(--warn)}
       <tr><td class="g">●</td><td><b>Coralum Ingot</b><br>2 Coralum Ore + 5 Coal</td><td>Refined at the Gigantic Furnace. One source puts the recipe at Lv 62.</td></tr>
       <tr><td class="g">◐</td><td><b>Chromite</b> is used in 3 recipes</td><td>Hexolite and Mythical Wooden Board. I couldn't find the third.</td></tr>
       <tr><td class="g">◐</td><td><b>Coralum Ore</b> is used in 3 recipes</td><td>Coralum Ingot and two fishing rods.</td></tr>
+      <tr><td class="g">◐</td><td><b>Cake</b><br>5 Flour, 8 Red Berries, 7 Milk, 8 Egg, 2 Honey</td><td>Cooking Pot (Lv 17) or any later kitchen. Keeps the Breeding Farm running.</td></tr>
+      <tr><td class="g">◐</td><td><b>Mushroom Cake</b> (Lv 30)<br>5 Flour, 5 Mushroom, 3 Cavern Mushroom, 8 Egg, 2 Honey</td><td>Slightly better stat talents. One source.</td></tr>
+      <tr><td class="g">◐</td><td><b>Vegetable Cake</b> (Lv 47)<br>8 Flour, 8 Tomato, 7 Lettuce, 8 Egg, 4 Honey</td><td>Two eggs per breeding cycle. Electric Kitchen or better. One source.</td></tr>
+      <tr><td class="g">◐</td><td><b>Extravagant Vegetable Cake</b> (Lv 60)<br>12 Flour, 8 Cotton Candy, 10 Potato, 6 Onion, 8 Carrot</td><td>Mutated Egg chance about 1% to 3%, plus better stat talents. Stone Oven or Ancient Kitchen. No Egg or Milk. One source.</td></tr>
+      <tr><td class="g">◐</td><td><b>Special Cake</b> (Lv 74)<br>20 Flour, 8 Caramel Cotton Candy, 15 Milk, 15 Egg, 2 Mammorest Meat</td><td>Better odds of inheriting several passives. Ancient Kitchen. One source.</td></tr>
       <tr><td class="g">●</td><td><b>Plasteel</b><br>2 Crude Oil + 5 Ore</td><td>Electric Furnace, Lv 50.</td></tr>
       <tr><td class="g">◐</td><td><b>Synthesizer menu (12)</b><br>Wood, Stone, Hardwood, Paldium Fragment, Ore, Coal, Chromite, Sulfur, Pure Quartz, Hexolite Quartz, Coralum Ore, Soralite</td><td>No Paloxite. One Pal, Lumbering for wood, Mining for the rest. Draws 800 power. Output stops at 9,999 (one source).</td></tr>
     </tbody>
@@ -341,25 +362,28 @@ button.armed{border-color:var(--warn);color:var(--warn)}
   <h2>What I couldn't confirm</h2>
   <p class="sec-sub">Check these in game before you rely on them.</p>
   <ul class="doubts">
-    <li><span class="g">○</span><div><b>No transfer between bases.</b> My assumption, about 90% sure. If items do move, the carry list shrinks.</div></li>
+    <li><span class="g">●</span><div><b>Items can move between bases.</b> Earlier versions of this planner said they couldn't, which was wrong. The Guild Chest has 54 shared slots, one per base, unlocks at Lv 41 and costs 50 Refined Ingots, 100 Paldium Fragments and 10 Parts. Three sources agree.</div></li>
+    <li><span class="g">○</span><div><b>Worker Pals and the Guild Chest.</b> No source confirms that transporters deposit into it or pull from it, or that Pals eat from it. The plan assumes you move everything by hand.</div></li>
+    <li><span class="g">○</span><div><b>Ranch Pals count toward the worker cap.</b> No source says either way. I'm about 95% sure they do.</div></li>
+    <li><span class="g">○</span><div><b>Ranch output.</b> 1.0 raised base ranch output and changed the production interval, but nobody has published the numbers. Four Ranches is my starting guess.</div></li>
+    <li><span class="g">◐</span><div><b>Cake effects.</b> Levels and effects come from one KeenGamer article (Aug 2026). The base Cake recipe is from Pindrop (Oct 2026).</div></li>
     <li><span class="g">◐</span><div><b>World Tree coordinates.</b> Two guides put the Base of the World Tree fast travel point at -838, 689, in the far northwest. Two others print 841, 639 with the sign dropped, and the earlier version of this page copied that. The X sign is settled; the Y value is within about 50.</div></li>
     <li><span class="g">◐</span><div><b>Where Paloxite Ingots are made.</b> Two guides say the Ancient Furnace. Pindrop's item page says the Production Assembly Line. All four sources agree the recipe unlocks at Lv 74.</div></li>
     <li><span class="g">◐</span><div><b>Synthesizer cost.</b> Pindrop and palworld.tools say 50 Paloxite Ingots and 10 Cores. One guide lists 100 ingots, 10 Holy Water, 20 Thermal Cores and 20 Cryogenic Coolant.</div></li>
     <li><span class="g">◐</span><div><b>Work-suitability levels.</b> Pindrop's structure pages list Lv 1+ for the quarries and Recycler. palworld.tools lists Lv 10 workers. Neither gives numbers for the furnaces. I removed the Lv 6+ figures the earlier version showed.</div></li>
-    <li><span class="g">○</span><div><b>Structures with no level here.</b> Ore Mining Site, Electric Furnace and Breeding Farm had no level I could verify. The planner treats them as available at any level.</div></li>
+    <li><span class="g">◐</span><div><b>Kitchen and cake levels.</b> Each comes from one source (KeenGamer, Aug 2026).</div></li>
+    <li><span class="g">○</span><div><b>Structures with no level here.</b> Ore Mining Site, Electric Furnace, Breeding Farm, Ranch, plantations and Mill had no level I could verify. The planner treats them as available at any level.</div></li>
     <li><span class="g">◐</span><div><b>Fourth base.</b> Pindrop gives base levels 8, 15 and 25 for bases 2, 3 and 4, and three other guides agree on 25. One tracker derives 21.</div></li>
+    <li><span class="g">◐</span><div><b>More than four bases.</b> The guild limit is 4 by default and the server setting goes up to 10. If you raise it, moving breeding out of the ancient base is the first thing to try.</div></li>
     <li><span class="g">◐</span><div><b>Tech Point costs.</b> A Palpedia table disagrees with Pindrop's per-structure pages, and the Ancient points are separate. I left costs out.</div></li>
     <li><span class="g">◐</span><div><b>Recycler output.</b> Mythical Wood and Paloxite are guaranteed on every relic tier, with Radiant Gems at low rates and Cores from tier 4 and 5 relics. Sources don't say whether the Paloxite is ore or ingots. One guide says it also takes Holy Water.</div></li>
     <li><span class="g">◐</span><div><b>Holy Water source.</b> One guide says Teafant Springs in the World Tree, 10 per touch. Another ties it to a quest with the World Tree Guardian.</div></li>
     <li><span class="g">◐</span><div><b>Worker cap.</b> Every preset gives 15. The level table reaches 30 at base level 30, and the setting maxes at 50.</div></li>
-    <li><span class="g">○</span><div><b>Worker counts</b> are my estimates, recounted per structure plus a hauling allowance.</div></li>
-    <li><span class="g">○</span><div><b>Merged bases.</b> The 1, 2 and 3 base layouts are my suggestions. Nothing in the sources says what works best.</div></li>
+    <li><span class="g">○</span><div><b>Worker counts and layouts.</b> Counts are my estimates, per structure plus a hauling allowance. The 1, 2 and 3 base layouts are my suggestions. Nothing in the sources says what works best.</div></li>
     <li><span class="g">◐</span><div><b>Wiping bases.</b> One page covering 1.0 (checked Aug 2026) says disassembly refunds 100% and Pal workstations auto-dismantle with the Palbox. It says base level is a separate track but never says whether it resets when the last Palbox goes. I couldn't confirm that.</div></li>
   </ul>
   <p class="foot">Sources:</p>
   <div class="sources">
-    <a href="https://www.palworldcompanion.com/guides/world-tree">World Tree entrance</a>
-    <a href="https://thegameslayer.com/guides/palworld-how-to-unlock-the-world-tree-area/">World Tree entrance (2)</a>
     <a href="https://pindrop.gg/palworld/structures/ancient-furnace">Ancient Furnace</a>
     <a href="https://pindrop.gg/palworld/structures/ancient-material-synthesizer">Synthesizer</a>
     <a href="https://pindrop.gg/palworld/structures/ancient-relic-recycler">Recycler</a>
@@ -377,11 +401,21 @@ button.armed{border-color:var(--warn);color:var(--warn)}
     <a href="https://www.palmods.gg/guides/items/ancient-civilization-core">Core sources</a>
     <a href="https://pindrop.gg/palworld/guides/best-mining-pals">Mining Pals</a>
     <a href="https://www.gamerfuzion.com/palworld-best-base-locations/">Base coordinates</a>
+    <a href="https://www.palworldcompanion.com/guides/world-tree">World Tree entrance</a>
+    <a href="https://thegameslayer.com/guides/palworld-how-to-unlock-the-world-tree-area/">World Tree entrance (2)</a>
     <a href="https://www.palworld.tools/items/hexolite">Hexolite</a>
     <a href="https://nodecraft.com/support/games/palworld/general/how-to-get-paloxite-and-paloxite-ingots">Paloxite</a>
     <a href="https://progametalk.com/palworld/how-to-get-ancient-material-synthesizer/">Synthesizer menu</a>
     <a href="https://pindrop.gg/palworld/guides/base-limit">Base limits</a>
     <a href="https://palpedia.com/tech">Palpedia tech list</a>
+    <a href="https://palworld.wiki.gg/wiki/Guild_Chest">Guild Chest</a>
+    <a href="https://paldb.cc/en/Guild_Chest">Guild Chest data</a>
+    <a href="https://gamers.wiki/en/games/palworld/guides/palworld-guild-chest-shared-storage-capacity-food-rules">Guild Chest rules</a>
+    <a href="https://drawpie.com/blog/palworld-1-0-ranch-guide/">Ranch guide</a>
+    <a href="https://allthings.how/palworld-1-0-all-ranch-pals-and-what-they-drop/">Ranch drops</a>
+    <a href="https://www.keengamer.com/articles/guides/palworld-1-0-best-ranch-pals-and-what-they-produce/">Ranch Pals</a>
+    <a href="https://www.keengamer.com/articles/guides/palworld-1-0-all-new-cakes-how-to-make-them/">1.0 cakes</a>
+    <a href="https://pindrop.gg/palworld/guides/palworld-cake-recipe">Cake recipe</a>
     <a href="https://www.switchbladegaming.com/palworld/move-your-base/">Moving bases</a>
   </div>
 </section>
@@ -395,15 +429,17 @@ var STRUCT={
   furnace:{cores:10,thermal:20,computer:30,coralumIngot:100},
   recycler:{ingots:50,wood:50,parts:30,cores:20},
   synth:{ingots:50,cores:10},
-  hatchery:{ingots:100,parts:30,cores:20,ai:50}
+  hatchery:{ingots:100,parts:30,cores:20,ai:50},
+  gchest:{refined:50,paldium:100,parts:10}
 };
 function calcTotals(o){
-  var t={ingots:0,cores:0,parts:0,wood:0,ai:0,thermal:0,computer:0,coralumIngot:0};
+  var t={ingots:0,cores:0,parts:0,wood:0,ai:0,thermal:0,computer:0,coralumIngot:0,refined:0,paldium:0};
   function add(s,n){for(var k in s){t[k]=(t[k]||0)+s[k]*n;}}
   if(o.furnace)add(STRUCT.furnace,1);
   if(o.recycler)add(STRUCT.recycler,1);
   if(o.synth>0)add(STRUCT.synth,o.synth);
   if(o.hatchery)add(STRUCT.hatchery,1);
+  if(o.gchest>0)add(STRUCT.gchest,o.gchest);
   t.ore=t.ingots*2; t.soralite=t.ingots; t.water=t.ingots;
   t.coralumOre=t.coralumIngot*2; t.coal=t.coralumIngot*5;
   return t;
@@ -412,31 +448,40 @@ function calcTotals(o){
 
 /*PLAN-START*/
 var UNLOCK=[
+  {k:"cookpot",n:"Cooking Pot",l:17,g:"◐",x:"Cooks basic Cake."},
+  {k:"mcake",n:"Mushroom Cake",l:30,g:"◐",x:"Slightly better stat talents, one source."},
   {k:"coal",n:"Coal Quarry",l:37,g:"●",x:"An older source said 53."},
+  {k:"gchest",n:"Guild Chest",l:41,g:"●",x:"54 shared slots, one per base. 4 Ancient Tech Points."},
+  {k:"ekitchen",n:"Electric Kitchen",l:41,g:"◐",x:"One source."},
   {k:"sulfur",n:"Sulfur Quarry",l:46,g:"●",x:""},
+  {k:"vcake",n:"Vegetable Cake",l:47,g:"◐",x:"Two eggs per breeding cycle, one source."},
+  {k:"oven",n:"Large-Scale Stone Oven",l:49,g:"◐",x:"Cooks the vegetable cakes. One source."},
   {k:"crude",n:"Crude Oil Extractor",l:50,g:"●",x:"Must sit on an oil node."},
   {k:"hpext",n:"High-Pressure Crude Oil Extractor",l:51,g:"●",x:"No oil node needed. Open ground inside the base."},
   {k:"quartz",n:"Pure Quartz Quarry",l:52,g:"●",x:""},
   {k:"cutter",n:"Plasma Multicutter",l:54,g:"◐",x:"Tool, not a structure. Fastest on endgame nodes."},
-  {k:"gfurn",n:"Gigantic Furnace",l:58,g:"●",x:"Hexolite."},
+  {k:"gfurn",n:"Gigantic Furnace",l:58,g:"●",x:"Hexolite and refined Coralum Ingots."},
+  {k:"xcake",n:"Extravagant Vegetable Cake",l:60,g:"◐",x:"Mutated Egg chance about 1% to 3%, one source."},
   {k:"hexmine",n:"Hexolite Quartz Mine",l:62,g:"●",x:""},
   {k:"coralum",n:"Coralum Ingot recipe",l:62,g:"◐",x:"One source."},
   {k:"afurn",n:"Ancient Furnace",l:66,g:"●",x:"Soralite Ingots from here. Paloxite Ingots wait for Lv 74."},
   {k:"awb",n:"Ancient Workbench",l:67,g:"●",x:"Built from Soralite Ingots, AI Cores and Bio Batteries."},
+  {k:"akitchen",n:"Ancient Kitchen",l:70,g:"◐",x:"Needed for Special Cake. One source."},
   {k:"soralite",n:"Soralite Quarry",l:72,g:"●",x:""},
   {k:"paloxite",n:"Paloxite Ingot recipe",l:74,g:"●",x:"Needs World Tree inputs."},
   {k:"recycler",n:"Ancient Relic Recycler",l:74,g:"●",x:""},
+  {k:"special",n:"Special Cake",l:74,g:"◐",x:"Better odds of several inherited passives, one source."},
   {k:"hatch",n:"Ancient Hatchery",l:76,g:"●",x:""},
   {k:"synth",n:"Ancient Material Synthesizer",l:78,g:"●",x:""}
 ];
-var UNCHECKED=["Ore Mining Site","Electric Furnace","Breeding Farm and Egg Incubators"];
+var UNCHECKED=["Ore Mining Site","Electric Furnace","Breeding Farm and Egg Incubators","Ranch, plantations and Mill"];
 var UL={}; (function(){for(var i=0;i<UNLOCK.length;i++){UL[UNLOCK[i].k]=UNLOCK[i];}})();
 
 var ROLES={
-  A:{cls:"a",n:"Ore base",d:"Everything mined, plus Hexolite and Coralum."},
-  B:{cls:"b",n:"Ancient base",d:"Paloxite Ingots, Recycler, Workbench."},
-  C:{cls:"c",n:"Breeding base",d:"Cake chain, eggs, hatching."},
-  D:{cls:"d",n:"Oil base",d:"Last to build. Nothing waits on it."}
+  A:{cls:"a",n:"Ore and oil base",d:"Everything mined and smelted, plus oil and Plasteel."},
+  B:{cls:"b",n:"Ancient and breeding base",d:"Paloxite Ingots, Recycler, Workbench, breeding and the Hatchery."},
+  C:{cls:"c",n:"Ranch base",d:"Four Ranches and nothing else."},
+  D:{cls:"d",n:"Food base",d:"Plantations, Mill and kitchens. Everything edible ends up here."}
 };
 var JOBS=[
   {id:"a_ore",r:"A",n:"Ore Mining Site",key:null,tree:false,lo:2,hi:2,x:"Top miners: Aegidron (Mining 8), Astegon and Blazamut (7), Anubis (6)."},
@@ -446,21 +491,24 @@ var JOBS=[
   {id:"a_hex",r:"A",n:"Hexolite Quartz Mine",key:"hexmine",tree:false,lo:1,hi:1,x:""},
   {id:"a_furn",r:"A",n:"Furnaces",key:null,tree:false,lo:2,hi:3,x:"Kindling Pals. Hexolite needs the Gigantic Furnace (Lv 58), and Coralum Ingots are refined there too."},
   {id:"a_syn",r:"A",n:"Ancient Material Synthesizer",key:"synth",tree:false,lo:1,hi:1,x:"One Pal: Lumbering for wood, Mining for ore. Swap its recipe between Chromite and Coralum Ore as you run short."},
+  {id:"a_ext",r:"A",n:"Crude Oil Extractor",key:"crude",tree:false,lo:1,hi:2,x:"The regular one needs an oil node. From Lv 51 the High-Pressure model is an option and doesn't."},
+  {id:"a_elec",r:"A",n:"Electric Furnace (Plasteel)",key:null,tree:false,lo:1,hi:2,x:"2 Crude Oil plus 5 Ore per Plasteel, so it sits next to the ore."},
   {id:"b_sor",r:"B",n:"Soralite Quarry",key:"soralite",tree:false,lo:1,hi:1,x:"Mining Pal. Soralite only spawns on the Sunreach islands, and the quarry costs 100 to build."},
   {id:"b_furn",r:"B",n:"Ancient Furnace",key:"afurn",tree:false,lo:2,hi:2,x:"Kindling and Cooling Pals. Soralite Ingots from Lv 66, Paloxite Ingots from Lv 74 with World Tree inputs."},
   {id:"b_rec",r:"B",n:"Ancient Relic Recycler",key:"recycler",tree:true,lo:1,hi:1,x:"Handiwork Pal. Needs 50 Mythical Wood from the World Tree."},
   {id:"b_wb",r:"B",n:"Ancient Workbench",key:"awb",tree:false,lo:1,hi:2,x:"Handiwork and Medicine Production Pals."},
-  {id:"c_ranch",r:"C",n:"Ranch",key:null,tree:false,lo:4,hi:5,x:"Chikipi (eggs), Mozzarina (milk), Beegarde (honey), Lamball (wool). Over-assign Beegarde, since honey is usually the limit."},
-  {id:"c_food",r:"C",n:"Wheat, Mill, plots, Cooking Pot",key:null,tree:false,lo:4,hi:5,x:""},
-  {id:"c_breed",r:"C",n:"Breeding Farm and Egg Incubators",key:null,tree:false,lo:3,hi:4,x:""},
-  {id:"c_hatch",r:"C",n:"Ancient Hatchery",key:"hatch",tree:false,lo:1,hi:2,x:"Runs on cake and collects its own eggs, so Grintale and Broncherry partner skills don't work on it."},
-  {id:"d_ext",r:"D",n:"Crude Oil Extractor",key:"crude",tree:false,lo:1,hi:2,x:"The regular one needs an oil node. From Lv 51 the High-Pressure model doesn't."},
-  {id:"d_elec",r:"D",n:"Electric Furnace (Plasteel)",key:null,tree:false,lo:1,hi:2,x:"2 Crude Oil plus 5 Ore per Plasteel."},
-  {id:"d_log",r:"D",n:"Logging Site II or a second Synthesizer",key:null,tree:false,lo:1,hi:2,x:""}
+  {id:"b_breed",r:"B",n:"Breeding Farm and Egg Incubators",key:null,tree:false,lo:3,hi:4,x:"Cakes arrive from the food base through the Guild Chest."},
+  {id:"b_hatch",r:"B",n:"Ancient Hatchery",key:"hatch",tree:false,lo:1,hi:2,x:"Runs on cake and collects its own eggs, so Grintale and Broncherry partner skills don't work on it."},
+  {id:"c_r1",r:"C",n:"Ranch 1 · Staples",key:null,tree:false,lo:4,hi:4,x:"Chikipi ×2, Mozzarina, Beegarde."},
+  {id:"c_r2",r:"C",n:"Ranch 2 · Sweets",key:null,tree:false,lo:4,hi:4,x:"Woolipop ×2, Woolipop Terra, Mozzarina."},
+  {id:"c_r3",r:"C",n:"Ranch 3 · Gear",key:null,tree:false,lo:4,hi:4,x:"Sibelyx Primo (Sibelyx without World Tree access), Dumud, Kelpsea, Vaelet."},
+  {id:"c_r4",r:"C",n:"Ranch 4 · Organs",key:null,tree:false,lo:4,hi:4,x:"Rooby, Foxcicle, Sparkit, Depresso."},
+  {id:"d_plant",r:"D",n:"Plantations and Mill",key:null,tree:false,lo:6,hi:9,x:"Wheat, Red Berries, Tomato, Lettuce, Potato, Onion, Carrot. This is the job that grows when you give it more room."},
+  {id:"d_kitchen",r:"D",n:"Kitchens",key:"cookpot",tree:false,lo:2,hi:3,x:"Cooking Pot first. Stone Oven or Ancient Kitchen unlock the better cakes."}
 ];
 var LAYOUT={
   1:[["A","B","C","D"]],
-  2:[["A","B"],["C"]],
+  2:[["A","B"],["C","D"]],
   3:[["A"],["B","D"],["C"]],
   4:[["A"],["B"],["C"],["D"]]
 };
@@ -474,13 +522,17 @@ function reasons(key,tree,st){
 function planBases(st){
   var groups=LAYOUT[st.bases]||LAYOUT[4], out=[], used={}, i, j;
   for(i=0;i<groups.length;i++){
-    var b={roles:groups[i],active:[],locked:[],lo:0,hi:0,haul:{lo:0,hi:0}};
+    var b={roles:groups[i],active:[],locked:[],lo:0,hi:0,haul:{lo:0,hi:0},chest:false};
     for(j=0;j<JOBS.length;j++){
       var jb=JOBS[j];
       if(groups[i].indexOf(jb.r)<0)continue;
       var rs=reasons(jb.key,jb.tree,st);
       if(rs.length){b.locked.push({job:jb,why:rs.join(" + ")});}
       else{b.active.push(jb);b.lo+=jb.lo;b.hi+=jb.hi;}
+    }
+    if(st.bases>1){
+      if(isOpen("gchest",st))b.chest=true;
+      else b.locked.push({job:{n:"Guild Chest"},why:"Lv "+UL.gchest.l});
     }
     var n=b.active.length;
     if(n>0){b.haul.lo=Math.max(1,Math.round(n*0.4));b.haul.hi=Math.max(1,Math.round(n*0.6));}
@@ -496,18 +548,21 @@ var CARRY=[
   {from:"T",to:"B",what:"Paloxite Ore, Holy Water, 50 Mythical Wood, relics",need:["b_rec"]},
   {from:"A",to:"B",what:"Pure Quartz for Soralite Ingots. Coralum Ingots if you build the furnace.",need:["b_wb","a_quartz"]},
   {from:"B",to:"A",what:"50 Paloxite Ingots for the Synthesizer",need:["a_syn","b_rec"]},
-  {from:"B",to:"C",what:"100 Paloxite Ingots for the Hatchery, plus 50 AI Cores, 30 Parts, 20 Cores",need:["c_hatch","b_rec"]},
-  {from:"A",to:"D",what:"Ore for Plasteel",need:["d_elec"]}
+  {from:"C",to:"D",what:"Eggs, Milk, Honey, Cotton Candy, Caramel Cotton Candy",need:["c_r1","d_kitchen"]},
+  {from:"C",to:"D",what:"Crop seeds from Vaelet, if you ranch one",need:["c_r3","d_plant"]},
+  {from:"D",to:"B",what:"Cakes for the Breeding Farm",need:["d_kitchen","b_breed"]},
+  {from:"C",to:"B",what:"High Quality Cloth, High Quality Pal Oil, Pal Fluids, organs and glands, for gear at the Workbench",need:["c_r3","b_wb"]}
 ];
 function carryRows(st,plan){
-  var act={}, i, j, rows=[];
+  var act={}, i, j, rows=[], chest=st.bases>1&&isOpen("gchest",st);
   for(i=0;i<plan.bases.length;i++){for(j=0;j<plan.bases[i].active.length;j++){act[plan.bases[i].active[j].id]=1;}}
   for(i=0;i<CARRY.length;i++){
     var c=CARRY[i], ok=true;
     for(j=0;j<c.need.length;j++){if(!act[c.need[j]])ok=false;}
     if(!ok)continue;
     var fb=c.from==="T"?-1:plan.roleBase[c.from], tb=plan.roleBase[c.to];
-    rows.push({from:fb,to:tb,same:fb===tb,what:c.what});
+    var same=fb===tb;
+    rows.push({from:fb,to:tb,same:same,what:c.what,via:(fb===-1||same)?"hand":(chest?"chest":"hand")});
   }
   return rows;
 }
@@ -523,7 +578,7 @@ function fmt(n){return n.toLocaleString("en-US");}
 
 /* settings */
 var SKEY="palworld-base-planner-v2-settings", CKEY="palworld-base-planner-v2-checks";
-var S={lvl:78,bases:4,cap:20,tree:true,wipe:true,furn:false,rec:true,hat:true,syn:1};
+var S={lvl:78,bases:4,cap:20,tree:true,wipe:true,furn:false,rec:true,hat:true,gc:true,syn:1};
 (function(){try{var v=JSON.parse(localStorage.getItem(SKEY)||"{}");for(var k in v){if(k in S)S[k]=v[k];}}catch(e){}})();
 function saveS(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
 var checks={};
@@ -535,23 +590,23 @@ function readInputs(){
   S.lvl=clampInt($("lvl").value,1,100,S.lvl);
   S.cap=clampInt($("cap").value,15,50,S.cap);
   S.tree=$("tree").checked; S.wipe=$("wipe").checked; S.furn=$("o-furnace").checked;
-  S.rec=$("o-recycler").checked; S.hat=$("o-hatchery").checked;
+  S.rec=$("o-recycler").checked; S.hat=$("o-hatchery").checked; S.gc=$("o-gchest").checked;
   S.syn=clampInt($("o-synth").value,0,4,0);
 }
 function writeInputs(){
   $("lvl").value=S.lvl; $("cap").value=S.cap;
   $("tree").checked=S.tree; $("wipe").checked=S.wipe; $("o-furnace").checked=S.furn;
-  $("o-recycler").checked=S.rec; $("o-hatchery").checked=S.hat; $("o-synth").value=S.syn;
+  $("o-recycler").checked=S.rec; $("o-hatchery").checked=S.hat; $("o-gchest").checked=S.gc; $("o-synth").value=S.syn;
 }
 function stateObj(){return {lvl:S.lvl,bases:S.bases,tree:S.tree};}
 
 /* bases */
 function siteNote(roles){
   var h="";
-  if(roles.indexOf("A")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Ore site, if you want one: a ridge near the Sealed Realm of the Guardian, about 180 to 190, -40. Roughly 8 ore nodes. One guide says raids can't path up. Lay stone foundations so Pals don't slide off.</div>";
-  if(roles.indexOf("B")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Ancient site: anywhere buildable. You can't build inside the World Tree. Its entrance, the Base of the World Tree fast travel point, is in the far northwest at about -838, 689, so a base near it shortens trips.</div>";
-  if(roles.indexOf("C")>=0)h+="<div class=\"site\">This base holds your best Pals. Raids come in waves, so put the Palbox in the middle, not on an outer wall.</div>";
-  if(roles.indexOf("D")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Oil site: a regular extractor needs an oil node. One guide lists the Sakurajima oil fields at -646, 270.</div>";
+  if(roles.indexOf("A")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Ore site, if you want one: a ridge near the Sealed Realm of the Guardian, about 180 to 190, -40. Roughly 8 ore nodes. One guide says raids can't path up. Lay stone foundations so Pals don't slide off. A regular oil extractor needs an oil node, and one guide lists the Sakurajima oil fields at -646, 270.</div>";
+  if(roles.indexOf("B")>=0)h+="<div class=\"site\"><span class=\"g\">◐</span> Ancient site: anywhere buildable. You can't build inside the World Tree. Its entrance, the Base of the World Tree fast travel point, is in the far northwest at about -838, 689, so a base near it shortens trips. Raids come in waves, so put the Palbox in the middle.</div>";
+  if(roles.indexOf("C")>=0)h+="<div class=\"site\">Each Ranch holds 4 Pals and I found no cap on how many you can place. Output rates aren't published, so treat the roster as a starting point.</div>";
+  if(roles.indexOf("D")>=0)h+="<div class=\"site\">Everything cooked here goes back out through the Guild Chest. Room to add plantations is the reason this base stands alone.</div>";
   return h;
 }
 function renderBases(plan){
@@ -566,11 +621,13 @@ function renderBases(plan){
     if(b.active.length){
       html+="<ul>";
       for(j=0;j<b.active.length;j++){html+="<li>"+b.active[j].n+" <span class=\"w\">"+(b.active[j].lo===b.active[j].hi?b.active[j].lo:b.active[j].lo+"–"+b.active[j].hi)+"</span></li>";}
-      html+="<li>Transporters <span class=\"w\">"+b.haul.lo+"–"+b.haul.hi+"</span></li></ul>";
+      html+="<li>Transporters <span class=\"w\">"+b.haul.lo+"–"+b.haul.hi+"</span></li>";
+      if(b.chest)html+="<li>Guild Chest <span class=\"w\">no workers</span></li>";
+      html+="</ul>";
     } else html+="<p class=\"muted\">Nothing from this role is unlocked yet.</p>";
     html+="</div>";
     var notes="";
-    for(j=0;j<b.active.length;j++){if(b.active[j].x)notes+="<li>"+b.active[j].x+"</li>";}
+    for(j=0;j<b.active.length;j++){if(b.active[j].x)notes+="<li><b>"+b.active[j].n+".</b> "+b.active[j].x+"</li>";}
     if(notes)html+="<div class=\"row\"><h4>Staff notes</h4><ul>"+notes+"</ul></div>";
     if(b.locked.length){
       html+="<div class=\"row later\"><h4>Later</h4><ul>";
@@ -583,7 +640,7 @@ function renderBases(plan){
   var skip="";
   if(plan.skipped.length){
     var sn=[];for(i=0;i<plan.skipped.length;i++){sn.push(ROLES[plan.skipped[i]].n.toLowerCase());}
-    skip="<div class=\"skip\">Not placed with "+S.bases+" base"+(S.bases>1?"s":"")+": the "+sn.join(" and the ")+". Add it when a third base opens, folded into the ancient base.</div>";
+    skip="<div class=\"skip\">Not placed with "+S.bases+" base"+(S.bases>1?"s":"")+": the "+sn.join(" and the ")+". Fold it into another base.</div>";
   }
   $("skip-out").innerHTML=skip;
   gauges();
@@ -595,7 +652,7 @@ function gauges(){
     var bar=g.querySelector(".bar");
     bar.style.setProperty("--lo",Math.min(100,lo/cap*100)+"%");
     bar.style.setProperty("--hi",Math.min(100,hi/cap*100)+"%");
-    g.querySelector(".g-txt").textContent=lo+"–"+hi+" of "+cap+(hi>cap?" · over":"");
+    g.querySelector(".g-txt").textContent=(lo===hi?lo:lo+"–"+hi)+" of "+cap+(hi>cap?" · over":"");
     bar.setAttribute("aria-label","Estimated workers "+lo+" to "+hi+" of "+cap);
     g.classList.toggle("over",hi>cap);
   }
@@ -637,40 +694,49 @@ function renderCarry(plan){
   var rows=carryRows(S,plan), html="", i;
   for(i=0;i<rows.length;i++){
     var r=rows[i];
-    if(r.same){html+="<tr><td>"+pillFor(plan,r.from)+"</td><td><span class=\"muted\">same base</span></td><td class=\"muted\">"+r.what+" (no carry)</td></tr>";}
-    else html+="<tr><td>"+pillFor(plan,r.from)+"</td><td>"+pillFor(plan,r.to)+"</td><td>"+r.what+"</td></tr>";
+    if(r.same){html+="<tr><td>"+pillFor(plan,r.from)+"</td><td><span class=\"muted\">same base</span></td><td class=\"muted\">"+r.what+"</td><td class=\"muted\">no carry</td></tr>";}
+    else html+="<tr><td>"+pillFor(plan,r.from)+"</td><td>"+pillFor(plan,r.to)+"</td><td>"+r.what+"</td><td class=\"small\">"+(r.via==="chest"?"Guild Chest":"By hand")+"</td></tr>";
   }
-  if(!html)html="<tr><td colspan=\"3\" class=\"muted\">Nothing to carry yet. The ancient chain isn't open at your level.</td></tr>";
+  if(!html)html="<tr><td colspan=\"4\" class=\"muted\">Nothing to carry yet. The ancient chain isn't open at your level.</td></tr>";
   $("carry-out").innerHTML=html;
 }
 
 /* checklist */
 var PHASES=[
   {t:"Before you wipe",only:"wipe",items:[
-    {k:"p0a",x:"Raise the work-Pals-per-base setting to match the gauges above."},
-    {k:"p0b",x:"Empty every chest first. Contents don't transfer. Then disassemble structures in Build Mode, which refunds 100% (one source, 1.0). Pal workstations auto-dismantle with the Palbox and drop their refund on the ground, so pick it up."},
-    {k:"p0c",x:"Keep one Palbox standing until the new bases are placed, since I found nothing on whether base level resets. Working Pals return to the Palbox and need their jobs set again."}]},
-  {t:"Ore base",role:"A",items:[
-    {k:"p1a",x:"Place the Palbox, then the Ore site and whichever quarries you have unlocked."},
-    {k:"p1b",x:"Add furnaces with Kindling Pals, plus transporters."},
-    {k:"p1c",x:"Stock 200 Coralum Ore and 500 Coal, and smelt 100 Coralum Ingot for the Ancient Furnace.",need:["coralum"],only:"furn"}]},
-  {t:"Ancient base",role:"B",items:[
-    {k:"p2a",x:"Place the Palbox and the Soralite Quarry with a Mining Pal.",need:["soralite"]},
-    {k:"p2b",x:"Build the Ancient Furnace if needed, then assign Kindling and Cooling Pals.",need:["afurn"]}]},
+    {k:"r0a",x:"Raise the work-Pals-per-base setting to match the gauges above."},
+    {k:"r0b",x:"Empty every chest first. Contents don't transfer. Then disassemble structures in Build Mode, which refunds 100% (one source, 1.0). Pal workstations auto-dismantle with the Palbox and drop their refund on the ground, so pick it up."},
+    {k:"r0c",x:"Keep one Palbox standing until the new bases are placed, since I found nothing on whether base level resets. Working Pals return to the Palbox and need their jobs set again."}]},
+  {t:"Ore and oil base",role:"A",items:[
+    {k:"r1a",x:"Place the Palbox, then the Ore site and whichever quarries you have unlocked."},
+    {k:"r1b",x:"Add furnaces with Kindling Pals, plus transporters."},
+    {k:"r1c",x:"Stock 200 Coralum Ore and 500 Coal, and smelt 100 Coralum Ingot for the Ancient Furnace.",need:["coralum"],only:"furn"},
+    {k:"r1d",x:"Oil extractor, then an Electric Furnace for Plasteel (2 Crude Oil plus 5 Ore)."}]},
+  {t:"Ancient and breeding base",role:"B",items:[
+    {k:"r2a",x:"Place the Palbox and the Soralite Quarry with a Mining Pal.",need:["soralite"]},
+    {k:"r2b",x:"Build the Ancient Furnace if needed, then assign Kindling and Cooling Pals.",need:["afurn"]},
+    {k:"r2c",x:"Breeding Farm and a few Egg Incubators."}]},
+  {t:"Ranch base",role:"C",items:[
+    {k:"r3a",x:"Place the Palbox and four Ranches."},
+    {k:"r3b",x:"Fill them from the ranch roster. Ranch 1 first, since every cake needs its Eggs, Milk and Honey."},
+    {k:"r3c",x:"Watch real output for a day and swap Pals. 1.0 output rates aren't published."}]},
+  {t:"Food base",role:"D",items:[
+    {k:"r4a",x:"Plantations for Wheat, Red Berries, Tomato, Lettuce, Potato, Onion and Carrot, plus the Mill."},
+    {k:"r4b",x:"Cooking Pot, then basic Cake for the Breeding Farm.",need:["cookpot"]},
+    {k:"r4c",x:"Large-Scale Stone Oven or Ancient Kitchen, then the Vegetable Cakes.",need:["oven"]},
+    {k:"r4d",x:"Ancient Kitchen for Special Cake, using Caramel Cotton Candy and Milk from Ranch 2.",need:["akitchen","special"]}]},
+  {t:"Link the bases",onlyMulti:true,items:[
+    {k:"r5a",x:"Build a Guild Chest in every base. Parts are the squeeze: four chests, the Recycler and the Hatchery come to about 100.",need:["gchest"]},
+    {k:"r5b",x:"Test it. Drop an item in one chest and check it shows in another.",need:["gchest"]}]},
   {t:"World Tree runs",items:[
-    {k:"p3a",x:"Drink World Tree Holy Water before mining, or bring a Pal with a World Tree passive. Without either, Paloxite and Mythical Wood nodes vanish.",need:["paloxite"],tree:true},
-    {k:"p3b",x:"Mine Paloxite Ore. The Plasma Multicutter (Lv 54) is fastest, and Digtoise's partner skill also works.",need:["paloxite"],tree:true},
-    {k:"p3c",x:"Gather 50 Mythical Wood, spare Holy Water and relics.",need:["recycler"],tree:true}]},
+    {k:"r6a",x:"Drink World Tree Holy Water before mining, or bring a Pal with a World Tree passive. Without either, Paloxite and Mythical Wood nodes vanish.",need:["paloxite"],tree:true},
+    {k:"r6b",x:"Mine Paloxite Ore. The Plasma Multicutter (Lv 54) is fastest, and Digtoise's partner skill also works.",need:["paloxite"],tree:true},
+    {k:"r6c",x:"Gather 50 Mythical Wood, spare Holy Water and relics.",need:["recycler"],tree:true}]},
   {t:"Ingots, then machines",items:[
-    {k:"p4a",x:"Smelt 50 Paloxite Ingots and build the Recycler.",need:["recycler"],tree:true},
-    {k:"p4b",x:"Feed it relics. Collect the Mythical Wood and Paloxite it returns.",need:["recycler"],tree:true},
-    {k:"p4c",x:"Smelt 50 more ingots, carry them to the ore base, build the Synthesizer on Chromite.",need:["synth"],tree:true}]},
-  {t:"Breeding base",role:"C",items:[
-    {k:"p5a",x:"Ranch, wheat and Mill, vegetable plots, Cooking Pot."},
-    {k:"p5b",x:"Breeding Farm and a few Egg Incubators."},
-    {k:"p5c",x:"Hatchery once you hold 100 ingots, 50 AI Cores, 30 Parts and 20 Cores. Keep it stocked with cake.",need:["hatch"]}]},
-  {t:"Oil base",role:"D",items:[
-    {k:"p6a",x:"Oil extractors, Electric Furnace, and a wood source."}]}
+    {k:"r7a",x:"Smelt 50 Paloxite Ingots and build the Recycler.",need:["recycler"],tree:true},
+    {k:"r7b",x:"Feed it relics. Collect the Mythical Wood and Paloxite it returns.",need:["recycler"],tree:true},
+    {k:"r7c",x:"Smelt 50 more ingots, carry them to the ore base, build the Synthesizer on Chromite.",need:["synth"],tree:true},
+    {k:"r7d",x:"Hatchery once you hold 100 ingots, 50 AI Cores, 30 Parts and 20 Cores. Keep it stocked with cake. It sits in the ancient and breeding base, so the ingots don't travel.",need:["hatch"]}]}
 ];
 function itemLock(it){
   var rs=[], i;
@@ -684,6 +750,7 @@ function renderOrder(plan){
   for(i=0;i<PHASES.length;i++){
     var p=PHASES[i];
     if(p.only==="wipe"&&!S.wipe)continue;
+    if(p.onlyMulti&&S.bases<2)continue;
     if(p.role&&plan.roleBase[p.role]===undefined)continue;
     n++;
     html+="<div class=\"phase\"><h3>"+n+" · "+p.t+" <span class=\"count\" data-phase></span></h3>";
@@ -731,14 +798,16 @@ reset.addEventListener("click",function(){
 
 /* totals */
 function renderCalc(){
-  var t=calcTotals({furnace:S.furn,recycler:S.rec,hatchery:S.hat,synth:S.syn});
+  var t=calcTotals({furnace:S.furn,recycler:S.rec,hatchery:S.hat,synth:S.syn,gchest:(S.gc&&S.bases>1)?S.bases:0});
   var rows=[
     ["Paloxite Ingots",t.ingots,"Ancient Furnace, ancient base"],
     ["Paloxite Ore",t.ore,"World Tree, hand-mined with Holy Water or a World Tree passive Pal"],
     ["Soralite",t.soralite,"Soralite Quarry, ancient base"],
     ["World Tree Holy Water",t.water,"Plus extra for mining, unless a Pal has a World Tree passive"],
     ["Ancient Civilization Cores",t.cores,"Raid bosses, expeditions, oil rig chests, high-tier relics in the Recycler"],
-    ["Ancient Civilization Parts",t.parts,"Recycler 30, Hatchery 30"],
+    ["Ancient Civilization Parts",t.parts,"Recycler 30, Hatchery 30, Guild Chest 10 each"],
+    ["Refined Ingots",t.refined,"Guild Chests, 50 each. Smelt at the ore base."],
+    ["Paldium Fragments",t.paldium,"Guild Chests, 100 each. Mined, or from the Synthesizer menu."],
     ["Mythical Wood",t.wood,"World Tree, 50 for the Recycler"],
     ["AI Cores",t.ai,"Hatchery"],
     ["Thermal Cores",t.thermal,"Furnace build"],
@@ -755,12 +824,19 @@ function renderCalc(){
   $("calc-body").innerHTML=html;
   $("h-rec").textContent=isOpen("recycler",S)?"":"locked, Lv "+UL.recycler.l;
   $("h-hat").textContent=isOpen("hatch",S)?"":"locked, Lv "+UL.hatch.l;
+  $("h-gc").textContent=S.bases<2?"needs 2+ bases":(isOpen("gchest",S)?"":"locked, Lv "+UL.gchest.l);
   $("h-syn").textContent=isOpen("synth",S)?"":"locked, Lv "+UL.synth.l;
 }
 
 function renderAll(){
   var plan=planBases(stateObj());
-  $("bases-sub").textContent=S.bases===4?"One job each. Worker counts are my estimates. Change the cap above to see how much room each base has.":"Roles are merged to fit "+S.bases+" base"+(S.bases>1?"s":"")+". Watch the gauges: a merged base can run over your cap.";
+  var subs={
+    4:"One job each. Worker counts are my estimates, and Ranch Pals count toward the cap (about 95% sure). If your base limit allows a fifth base, move breeding out of the ancient base first.",
+    3:"Food joins the ancient and breeding base, so cakes never travel. Watch the gauges: a merged base can run over your cap.",
+    2:"Ore, oil and the ancient chain share one base, and the ranches share one with food. Expect both to run over a cap of 20.",
+    1:"Everything in one base. It will run far over any cap, so this is only a stopgap until a second base opens."
+  };
+  $("bases-sub").textContent=subs[S.bases];
   renderBases(plan); renderLadder(); renderChain(); renderCarry(plan); renderOrder(plan); renderCalc();
   var nb=document.querySelectorAll("#nb button");
   for(var i=0;i<nb.length;i++){nb[i].setAttribute("aria-pressed",String(+nb[i].getAttribute("data-n")===S.bases));}
@@ -768,7 +844,7 @@ function renderAll(){
   for(var q=0;q<qs.length;q++){qs[q].setAttribute("aria-pressed",String(+qs[q].getAttribute("data-l")===S.lvl));}
 }
 function onChange(){readInputs();saveS();renderAll();}
-["lvl","cap","tree","wipe","o-furnace","o-recycler","o-hatchery","o-synth"].forEach(function(id){$(id).addEventListener("input",onChange);});
+["lvl","cap","tree","wipe","o-furnace","o-recycler","o-hatchery","o-gchest","o-synth"].forEach(function(id){$(id).addEventListener("input",onChange);});
 document.querySelectorAll("#nb button").forEach(function(b){b.addEventListener("click",function(){S.bases=+b.getAttribute("data-n");saveS();renderAll();});});
 document.querySelectorAll("#qs button").forEach(function(b){b.addEventListener("click",function(){S.lvl=+b.getAttribute("data-l");$("lvl").value=S.lvl;saveS();renderAll();});});
 

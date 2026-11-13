@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## 2026-11-13 — Ranch base redesign
+
+### Changed
+- Base roles rebuilt around the 20-Pal cap: ore and oil, ancient and breeding, a ranch base, and a food base. One base for ranching, breeding and crops filled the cap too fast (a Ranch holds 4 Pals, breeding needs 2+).
+- Ranch base: four Ranches of four Pals with a roster (Staples, Sweets, Gear, Organs). Output rates in 1.0 are unpublished, so the roster is a starting point.
+- Food base: plantations, Mill and kitchens. Cakes (Cake, Mushroom, Vegetable, Extravagant Vegetable, Special) and kitchen levels are in the ladder (one source, flagged).
+- Carry list now routes through the Guild Chest (Lv 41, 54 slots, one per base). It corrects the earlier assumption that items can't move between bases.
+- Totals add Guild Chest costs and an Ancient Civilization Parts line. Four chests, the Recycler and the Hatchery come to about 100 Parts.
+- Layouts for 1, 2 and 3 bases merge roles; the 1-base layout has no Guild Chest.
+
+### Merged
+- Rebased onto the 2026-11-11 accuracy review: unlock levels, Lv 74 Paloxite gating, World Tree coordinates and source list are all kept.
+
 ## 2026-11-11 — Accuracy review
 
 Full fact check against Pindrop's per-structure game-data pages, palworld.tools, the Palworld wiki and several guides.
